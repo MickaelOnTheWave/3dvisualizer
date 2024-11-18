@@ -13,10 +13,11 @@ find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets OpenGLWidgets)
 
 set(PROJECT_SOURCES
-        main.cpp
-        MainWindow.cpp
-        MainWindow.h
-        MainWindow.ui
+        src/main.cpp
+        src/MainWindow.cpp
+        src/MainWindow.h
+        src/MainWindow.ui
+        src/RendererGlWindow.h src/RendererGlWindow.cpp
 )
 
 qt_add_executable(3dVisualizer
