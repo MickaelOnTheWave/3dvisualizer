@@ -12,6 +12,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets OpenGLWidgets)
 
+set_directory_properties(PROPERTIES COMPILE_DEFINITIONS KITGL_SUPPORT_GLFW=0)
+add_subdirectory(RenderLib)
+
 set(PROJECT_SOURCES
         src/main.cpp
         src/MainWindow.cpp
@@ -25,7 +28,7 @@ qt_add_executable(3dVisualizer
     ${PROJECT_SOURCES}
 )
 
-target_link_libraries(3dVisualizer PRIVATE Qt6::Widgets Qt6::OpenGLWidgets)
+target_link_libraries(3dVisualizer PRIVATE Qt6::Widgets Qt6::OpenGLWidgets RenderLib)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
