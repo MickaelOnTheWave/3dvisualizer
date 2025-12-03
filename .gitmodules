@@ -1,0 +1,3 @@
+[submodule "libs/RenderLib"]
+	path = libs/RenderLib
+	url = https://github.com/MickaelOnTheWave/RenderLib.git

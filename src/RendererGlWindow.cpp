@@ -1,6 +1,7 @@
 #include "RendererGlWindow.h"
 
 #include "cameras/OrbitCamera.h"
+#include "objects/GlRenderCube.h"
 
 RendererGlWindow::RendererGlWindow(QWidget *parent)
   : QOpenGLWidget(parent)
@@ -14,42 +15,42 @@ GlRenderer* RendererGlWindow::GetRenderer()
 
 void RendererGlWindow::initializeGL()
 {
-   glClearColor(0,0,0,1);
-   glEnable(GL_DEPTH_TEST);
-   glEnable(GL_LIGHT0);
-   glEnable(GL_LIGHTING);
-   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-   glEnable(GL_COLOR_MATERIAL);
+    if (!gladLoadGL())
+    {
+        emit RendererError(QString::fromUtf8("Failed to initialize Glad"));
+        return;
+    }
 
-   //AbstractGlCamera* defaultCamera = new OrbitCamera(0.f, 0.f, 0.f);
-   //renderer = new GlRenderer(*defaultCamera);
-   //ui->openGLWidget->SetRenderer(renderer);
+   AbstractGlCamera* defaultCamera = new OrbitCamera(Vector3(0.f, 0.f, 0.f));
+   renderer = new GlRenderer(defaultCamera);
 
-   //renderer->PrepareRendering();
+   renderer->Initialize({new ShaderProgram("data/basic.vert", "data/basic.frag")});
+
+   renderer->SetClearColor(0.0f, 0.0f, 0.0f);
+
+   AddObjects();
+
+   renderer->PrepareRendering();
+   if (renderer->HasError())
+       emit RendererError(QString::fromUtf8(renderer->GetError()));
 }
 
 void RendererGlWindow::resizeGL(int w, int h)
 {
-   glViewport(0,0,w,h);
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   //gluPerspective(45, (float)w/h, 0.01, 100.0);
-   glMatrixMode(GL_MODELVIEW);
-   glLoadIdentity();
-   //gluLookAt(0,0,5,0,0,0,0,1,0);
 }
 
 void RendererGlWindow::paintGL()
 {
-   //renderer->Render();
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    renderer->Render();
+    if (renderer->HasError())
+        emit RendererError(QString::fromUtf8(renderer->GetError()));
+}
 
-   glBegin(GL_TRIANGLES);
-   glColor3f(1.0, 0.0, 0.0);
-   glVertex3f(-0.5, -0.5, 0);
-   glColor3f(0.0, 1.0, 0.0);
-   glVertex3f( 0.5, -0.5, 0);
-   glColor3f(0.0, 0.0, 1.0);
-   glVertex3f( 0.0,  0.5, 0);
-   glEnd();
+void RendererGlWindow::AddObjects()
+{
+    auto cubeMaterial = new Material("material");
+    auto cube = new GlRenderCube(cubeMaterial);
+    auto cubeInstance = new GlRenderedInstance(cube, Matrix4x4::Identity());
+
+    renderer->AddRenderObject(cubeInstance);
 }

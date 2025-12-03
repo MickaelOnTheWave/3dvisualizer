@@ -17,7 +17,10 @@ public:
    MainWindow(QWidget *parent = nullptr);
    ~MainWindow();
 
-   private:
+private slots:
+   void OnRendererError(const QString& message);
+
+private:
    Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

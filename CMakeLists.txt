@@ -53,6 +53,9 @@ install(TARGETS 3dVisualizer
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
+file(COPY "${CMAKE_SOURCE_DIR}/libs/RenderLib/data" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY "${CMAKE_SOURCE_DIR}/data" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(3dVisualizer)
 endif()
