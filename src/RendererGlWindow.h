@@ -3,9 +3,10 @@
 
 #include <glad/glad.h>
 #include <QOpenGLWidget>
-
+#include <QTimer>
 
 #include "GlRenderer.h"
+#include "cameras/OrbitCamera.h"
 
 class RendererGlWindow : public QOpenGLWidget
 {
@@ -15,6 +16,7 @@ public:
    RendererGlWindow(QWidget* parent);
 
    GlRenderer* GetRenderer();
+   void SetAnimation(const bool enabled);
 
 signals:
    void RendererError(const QString& message);
@@ -25,9 +27,13 @@ protected:
    void paintGL() override;
 
    GlRenderer* renderer = nullptr;
+   OrbitCamera* camera = nullptr;
 
 private:
    void AddObjects();
+
+    QTimer renderTimer;
+    bool animate = false;
 
 };
 
