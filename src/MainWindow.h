@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "GenericDialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -19,8 +21,13 @@ public:
 
 private slots:
    void OnRendererError(const QString& message);
+    void OnCameraDistanceChange(const int distance);
+
+   void OnActionOpenRenderData();
 
 private:
    Ui::MainWindow *ui;
+
+    GenericDialog* renderDataWidget = nullptr;
 };
 #endif // MAINWINDOW_H

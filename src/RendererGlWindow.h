@@ -17,6 +17,7 @@ public:
 
    GlRenderer* GetRenderer();
    void SetAnimation(const bool enabled);
+   void SetCameraDistance(const float newDistance);
 
 signals:
    void RendererError(const QString& message);

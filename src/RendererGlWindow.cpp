@@ -23,6 +23,11 @@ void RendererGlWindow::SetAnimation(const bool enabled)
         renderTimer.stop();
 }
 
+void RendererGlWindow::SetCameraDistance(const float newDistance)
+{
+    camera->CloseOut(newDistance);
+}
+
 void RendererGlWindow::initializeGL()
 {
     if (!gladLoadGL())

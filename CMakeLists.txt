@@ -17,10 +17,10 @@ add_subdirectory(libs)
 
 set(PROJECT_SOURCES
         src/main.cpp
-        src/MainWindow.cpp
-        src/MainWindow.h
-        src/MainWindow.ui
         src/RendererGlWindow.h src/RendererGlWindow.cpp
+        src/MainWindow.cpp src/MainWindow.h src/MainWindow.ui
+        src/RenderDataWidget.h src/RenderDataWidget.cpp src/RenderDataWidget.ui
+        src/GenericDialog.h src/GenericDialog.cpp src/GenericDialog.ui
 )
 
 qt_add_executable(3dVisualizer

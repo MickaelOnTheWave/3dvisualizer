@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>857</width>
-    <height>562</height>
+    <width>950</width>
+    <height>617</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -127,7 +127,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>857</width>
+     <width>950</width>
      <height>22</height>
     </rect>
    </property>
@@ -141,20 +141,28 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuAbout">
+   <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>About</string>
+     <string>Help</string>
     </property>
+    <addaction name="actionOpenAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionOpenRenderData"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuAbout"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget">
    <property name="minimumSize">
     <size>
      <width>130</width>
-     <height>167</height>
+     <height>198</height>
     </size>
    </property>
    <attribute name="dockWidgetArea">
@@ -165,7 +173,7 @@
      <item>
       <widget class="QToolBox" name="toolBox">
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="renderPage">
         <property name="geometry">
@@ -173,7 +181,7 @@
           <x>0</x>
           <y>0</y>
           <width>112</width>
-          <height>419</height>
+          <height>443</height>
          </rect>
         </property>
         <attribute name="label">
@@ -241,19 +249,19 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="scenePage">
+       <widget class="QWidget" name="navigationPage">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
           <width>112</width>
-          <height>419</height>
+          <height>443</height>
          </rect>
         </property>
         <attribute name="label">
-         <string>Scene</string>
+         <string>Navigation</string>
         </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
           <widget class="QCheckBox" name="animateBox">
            <property name="text">
@@ -261,6 +269,44 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QSlider" name="distanceSlider">
+           <property name="value">
+            <number>50</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>164</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="scenePage">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>112</width>
+          <height>443</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Scene</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
           <spacer name="verticalSpacer_6">
            <property name="orientation">
@@ -273,20 +319,6 @@
             </size>
            </property>
           </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton">
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_2">
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_3">
@@ -333,6 +365,16 @@
   <action name="actionNew">
    <property name="text">
     <string>New</string>
+   </property>
+  </action>
+  <action name="actionOpenRenderData">
+   <property name="text">
+    <string>Render Data</string>
+   </property>
+  </action>
+  <action name="actionOpenAbout">
+   <property name="text">
+    <string>About 3D Visualizer</string>
    </property>
   </action>
  </widget>
