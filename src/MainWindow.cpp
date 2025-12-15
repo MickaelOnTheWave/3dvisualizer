@@ -41,7 +41,11 @@ void MainWindow::OnCameraDistanceChange(const int distance)
 void MainWindow::OnActionOpenRenderData()
 {
     if (!renderDataWidget)
-        renderDataWidget = new GenericDialog(new RenderDataWidget(), this);
+    {
+        auto contentWidget = new RenderDataWidget();
+        contentWidget->SetRenderer(ui->openGLWidget->GetRenderer());
+        renderDataWidget = new GenericDialog(contentWidget, this);
+    }
     renderDataWidget->show();
     renderDataWidget->raise();
     renderDataWidget->activateWindow();
