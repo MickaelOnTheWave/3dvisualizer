@@ -45,6 +45,7 @@ void MainWindow::OnActionOpenRenderData()
         auto contentWidget = new RenderDataWidget();
         contentWidget->SetRenderer(ui->openGLWidget->GetRenderer());
         renderDataWidget = new GenericDialog(contentWidget, this);
+        renderDataWidget->setMinimumSize(contentWidget->size());
     }
     renderDataWidget->show();
     renderDataWidget->raise();
