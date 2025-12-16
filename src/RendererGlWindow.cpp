@@ -70,9 +70,9 @@ void RendererGlWindow::paintGL()
 void RendererGlWindow::AddObjects()
 {
     const int channelCount = 3;
-    const unsigned int whiteTextureId = renderer->AddTexture(Vector3(1,1,1));
-    const unsigned int textureId = renderer->AddTexture("data/eye-blue.jpg", channelCount);
-    auto cubeMaterial = new Material("material");
+    const unsigned int whiteTextureId = renderer->AddTexture(Vector3(1,1,1), "Plain White");
+    const unsigned int textureId = renderer->AddTexture("data/eye-blue.jpg", channelCount, "Eye");
+    auto cubeMaterial = new Material("Eye");
     cubeMaterial->diffuseTextureId = textureId;
     cubeMaterial->specularTextureId = whiteTextureId;
     cubeMaterial->shininess = 20.f;

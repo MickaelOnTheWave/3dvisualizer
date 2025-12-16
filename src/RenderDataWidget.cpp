@@ -32,17 +32,17 @@ void RenderDataWidget::OnUpdateData()
 
 void RenderDataWidget::FillTextures()
 {
-    const std::vector<unsigned int> textures = renderer->GetTextures();
-    ui->texturesView->setRowCount(textures.size());
-    ui->texturesView->setColumnCount(2);
+   const std::vector<GlTexture> textures = renderer->GetTextures();
+   ui->texturesView->setRowCount(textures.size());
+   ui->texturesView->setColumnCount(2);
 
-    int i=0;
-    for (const auto textureId : textures)
-    {
-        AddToTable(ui->texturesView, i, 0, textureId);
-        AddToTable(ui->texturesView, i, 1, QString("Undefined"));
-        ++i;
-    }
+   int i=0;
+   for (const auto texture : textures)
+   {
+      AddToTable(ui->texturesView, i, 0, texture.textureId);
+      AddToTable(ui->texturesView, i, 1, texture.GetName());
+      ++i;
+   }
 }
 
 void RenderDataWidget::FillMaterials()
