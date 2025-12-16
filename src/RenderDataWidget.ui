@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>321</width>
-    <height>529</height>
+    <width>588</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,6 +22,12 @@
      <layout class="QVBoxLayout" name="verticalLayout_10">
       <item>
        <widget class="QTableWidget" name="texturesView">
+        <attribute name="horizontalHeaderVisible">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
         <column>
          <property name="text">
           <string>Id</string>
@@ -45,6 +51,9 @@
      <layout class="QVBoxLayout" name="verticalLayout_9">
       <item>
        <widget class="QTableWidget" name="materialsView">
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
         <column>
          <property name="text">
           <string>Name</string>
@@ -75,6 +84,25 @@
      <property name="title">
       <string>Objects</string>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QTableWidget" name="objectsView">
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>MaterialId</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -82,6 +110,22 @@
      <property name="title">
       <string>Instances</string>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QTableWidget" name="instancesView">
+        <column>
+         <property name="text">
+          <string>Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>ObjectId</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

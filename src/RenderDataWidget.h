@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include <QTableWidget>
+
 #include "GlRenderer.h"
 
 namespace Ui {
@@ -23,6 +25,15 @@ public slots:
     void OnUpdateData();
 
 private:
+    void FillTextures();
+    void FillMaterials();
+    void FillObjects();
+    void FillInstances();
+
+    void AddToTable(QTableWidget* table, const int row, const int column, const int data) const;
+    void AddToTable(QTableWidget* table, const int row, const int column, const std::string& data) const;
+    void AddToTable(QTableWidget* table, const int row, const int column, const QString& label) const;
+
     Ui::RenderDataWidget *ui;
 
     GlRenderer* renderer = nullptr;

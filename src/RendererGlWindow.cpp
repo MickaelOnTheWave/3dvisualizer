@@ -78,10 +78,10 @@ void RendererGlWindow::AddObjects()
     cubeMaterial->shininess = 20.f;
     renderer->AddMaterial(cubeMaterial);
 
-    auto cube = new GlRenderCube(cubeMaterial);
+    auto cube = new GlRenderCube(cubeMaterial, "EyedCube");
     cube->Initialize();
     Matrix4x4 cubePos = Matrix4x4::Scale(1.f);
-    auto cubeInstance = new GlRenderedInstance(cube, cubePos);
+    auto cubeInstance = new GlRenderedInstance(cube, cubePos, "Main Object");
 
     renderer->AddRenderObject(cubeInstance);
 }
