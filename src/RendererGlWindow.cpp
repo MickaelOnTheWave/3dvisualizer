@@ -1,6 +1,5 @@
 #include "RendererGlWindow.h"
 
-#include "cameras/OrbitCamera.h"
 #include "objects/GlRenderCube.h"
 
 RendererGlWindow::RendererGlWindow(QWidget *parent)
@@ -9,9 +8,10 @@ RendererGlWindow::RendererGlWindow(QWidget *parent)
    connect(&renderTimer, &QTimer::timeout, this, [this]() {update();});
 }
 
-GlRenderer* RendererGlWindow::GetRenderer()
+void RendererGlWindow::SetRenderer(std::shared_ptr<GlRenderer> _renderer)
 {
-   return renderer;
+   renderer = _renderer;
+   currentCamera = dynamic_cast<OrbitCamera*>(renderer->GetCamera());
 }
 
 void RendererGlWindow::SetAnimation(const bool enabled)
@@ -23,11 +23,6 @@ void RendererGlWindow::SetAnimation(const bool enabled)
         renderTimer.stop();
 }
 
-void RendererGlWindow::SetCameraDistance(const float newDistance)
-{
-    camera->CloseOut(newDistance);
-}
-
 void RendererGlWindow::initializeGL()
 {
     if (!gladLoadGL())
@@ -36,13 +31,7 @@ void RendererGlWindow::initializeGL()
         return;
     }
 
-   camera = new OrbitCamera(Vector3(0.f, 0.f, 0.f));
-    camera->CloseOut(4.0f);
-   camera->RotateInX(20.f);
-
-   renderer = new GlRenderer(camera);
-
-   renderer->Initialize({new ShaderProgram("data/basic.vert", "data/singleTexture.frag")});
+   renderer->Initialize({new ShaderProgram("data/basic.vert", "data/singleTexture.frag", "Simple Texturing")});
 
    renderer->SetClearColor(0.0f, 0.0f, 0.0f);
 
@@ -60,7 +49,7 @@ void RendererGlWindow::resizeGL(int w, int h)
 void RendererGlWindow::paintGL()
 {
     if (animate)
-        camera->RotateInY(2.0f);
+      currentCamera->RotateInY(2.0f);
 
     renderer->Render();
     if (renderer->HasError())

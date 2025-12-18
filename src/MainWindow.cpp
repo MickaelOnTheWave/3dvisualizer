@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->stackedWidget->setCurrentWidget(ui->opengl);
 
+    CreateRenderer();
+    ui->openGLWidget->SetRenderer(renderer);
+
     connect(ui->actionOpenRenderData, &QAction::triggered, this, &MainWindow::OnActionOpenRenderData);
 
     connect(ui->wireframeBox, &QCheckBox::toggled, this, &MainWindow::OnEnableWireframe);
@@ -31,7 +34,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnEnableWireframe(const bool enabled)
 {
-   ui->openGLWidget->GetRenderer()->EnableWireframeMode(enabled);
+   renderer->EnableWireframeMode(enabled);
 }
 
 void MainWindow::OnRendererError(const QString& message)
@@ -47,7 +50,7 @@ void MainWindow::OnCameraDistanceChange(const int distance)
     const float destinationRange = 0.01f;
     const float destinationMiddle = 4.0f;
     const float destinationDistance = ((distance - ui->distanceSlider->minimum()) / sourceRange) * destinationRange + (destinationMiddle - destinationRange);
-    ui->openGLWidget->SetCameraDistance(0.1f);
+    camera->CloseOut(0.1f);
 }
 
 void MainWindow::OnColorChoose()
@@ -61,7 +64,7 @@ void MainWindow::OnActionOpenRenderData()
     if (!renderDataWidget)
     {
         auto contentWidget = new RenderDataWidget();
-        contentWidget->SetRenderer(ui->openGLWidget->GetRenderer());
+        contentWidget->SetRenderer(renderer.get());
         renderDataWidget = new GenericDialog(contentWidget, this);
         renderDataWidget->setMinimumSize(contentWidget->size());
     }
@@ -70,9 +73,18 @@ void MainWindow::OnActionOpenRenderData()
     renderDataWidget->activateWindow();
 }
 
+void MainWindow::CreateRenderer()
+{
+   camera = std::make_shared<OrbitCamera>(Vector3(0.f, 0.f, 0.f));
+   camera->CloseOut(4.0f);
+   camera->RotateInX(20.f);
+
+   renderer = std::make_shared<GlRenderer>(camera.get());
+}
+
 void MainWindow::UpdateClearColor(const QColor color)
 {
-   ui->openGLWidget->GetRenderer()->SetClearColor(color.redF(), color.greenF(), color.blueF());
+   renderer->SetClearColor(color.redF(), color.greenF(), color.blueF());
    SetColorButtonIcon(color);
 }
 

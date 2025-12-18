@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "GlRenderer.h"
+#include "cameras/OrbitCamera.h"
 #include "GenericDialog.h"
 
 QT_BEGIN_NAMESPACE
@@ -28,11 +30,15 @@ private slots:
    void OnActionOpenRenderData();
 
 private:
+   void CreateRenderer();
    void UpdateClearColor(const QColor color);
    void SetColorButtonIcon(const QColor color);
 
    Ui::MainWindow *ui;
 
    GenericDialog* renderDataWidget = nullptr;
+
+   std::shared_ptr<GlRenderer> renderer = nullptr;
+   std::shared_ptr<OrbitCamera> camera = nullptr;
 };
 #endif // MAINWINDOW_H

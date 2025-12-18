@@ -5,8 +5,8 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 
-#include "GlRenderer.h"
 #include "cameras/OrbitCamera.h"
+#include "GlRenderer.h"
 
 class RendererGlWindow : public QOpenGLWidget
 {
@@ -15,9 +15,9 @@ class RendererGlWindow : public QOpenGLWidget
 public:
    RendererGlWindow(QWidget* parent);
 
-   GlRenderer* GetRenderer();
+   void SetRenderer(std::shared_ptr<GlRenderer> _renderer);
+
    void SetAnimation(const bool enabled);
-   void SetCameraDistance(const float newDistance);
 
 signals:
    void RendererError(const QString& message);
@@ -27,15 +27,13 @@ protected:
    void resizeGL(int w, int h) override;
    void paintGL() override;
 
-   GlRenderer* renderer = nullptr;
-   OrbitCamera* camera = nullptr;
-
 private:
    void AddObjects();
 
-    QTimer renderTimer;
-    bool animate = true;
-
+   std::shared_ptr<GlRenderer> renderer;
+   OrbitCamera* currentCamera;
+   QTimer renderTimer;
+   bool animate = true;
 };
 
 #endif // RENDERERGLWINDOW_H
