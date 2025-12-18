@@ -34,7 +34,7 @@ private:
    void AddObjects();
 
     QTimer renderTimer;
-    bool animate = false;
+    bool animate = true;
 
 };
 

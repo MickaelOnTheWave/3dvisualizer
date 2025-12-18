@@ -20,14 +20,19 @@ public:
    ~MainWindow();
 
 private slots:
+   void OnEnableWireframe(const bool enabled);
    void OnRendererError(const QString& message);
-    void OnCameraDistanceChange(const int distance);
+   void OnCameraDistanceChange(const int distance);
+   void OnColorChoose();
 
    void OnActionOpenRenderData();
 
 private:
+   void UpdateClearColor(const QColor color);
+   void SetColorButtonIcon(const QColor color);
+
    Ui::MainWindow *ui;
 
-    GenericDialog* renderDataWidget = nullptr;
+   GenericDialog* renderDataWidget = nullptr;
 };
 #endif // MAINWINDOW_H

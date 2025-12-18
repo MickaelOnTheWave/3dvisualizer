@@ -6,7 +6,7 @@
 RendererGlWindow::RendererGlWindow(QWidget *parent)
   : QOpenGLWidget(parent)
 {
-    connect(&renderTimer, &QTimer::timeout, this, [this]() {update();});
+   connect(&renderTimer, &QTimer::timeout, this, [this]() {update();});
 }
 
 GlRenderer* RendererGlWindow::GetRenderer()
