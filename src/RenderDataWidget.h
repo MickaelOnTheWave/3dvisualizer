@@ -6,6 +6,7 @@
 #include <QTableWidget>
 
 #include "GlRenderer.h"
+#include "TextureModel.h"
 
 namespace Ui {
 class RenderDataWidget;
@@ -37,6 +38,7 @@ private:
     Ui::RenderDataWidget *ui;
 
     GlRenderer* renderer = nullptr;
+    TextureModel textureModel;
 };
 
 #endif // RENDERDATAWIDGET_H

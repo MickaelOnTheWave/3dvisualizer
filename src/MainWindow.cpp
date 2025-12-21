@@ -8,23 +8,23 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-    ui->stackedWidget->setCurrentWidget(ui->opengl);
+   ui->setupUi(this);
+   ui->stackedWidget->setCurrentWidget(ui->opengl);
 
-    CreateRenderer();
-    ui->openGLWidget->SetRenderer(renderer);
+   CreateRenderer();
+   ui->openGLWidget->SetRenderer(renderer);
 
-    connect(ui->actionOpenRenderData, &QAction::triggered, this, &MainWindow::OnActionOpenRenderData);
+   connect(ui->actionOpenRenderData, &QAction::triggered, this, &MainWindow::OnActionOpenRenderData);
 
-    connect(ui->wireframeBox, &QCheckBox::toggled, this, &MainWindow::OnEnableWireframe);
-    connect(ui->openGLWidget, &RendererGlWindow::RendererError, this, &MainWindow::OnRendererError);
-    connect(ui->animateBox, &QCheckBox::stateChanged, ui->openGLWidget, &RendererGlWindow::SetAnimation);
-    connect(ui->distanceSlider, &QSlider::sliderMoved, this, &MainWindow::OnCameraDistanceChange);
-    connect(ui->colorButton, &QAbstractButton::pressed, this, &MainWindow::OnColorChoose);
+   connect(ui->wireframeBox, &QCheckBox::toggled, this, &MainWindow::OnEnableWireframe);
+   connect(ui->openGLWidget, &RendererGlWindow::RendererError, this, &MainWindow::OnRendererError);
+   connect(ui->animateBox, &QCheckBox::stateChanged, ui->openGLWidget, &RendererGlWindow::SetAnimation);
+   connect(ui->distanceSlider, &QSlider::sliderMoved, this, &MainWindow::OnCameraDistanceChange);
+   connect(ui->colorButton, &QAbstractButton::pressed, this, &MainWindow::OnColorChoose);
 
-    ui->openGLWidget->SetAnimation(ui->animateBox->isChecked());
+   ui->openGLWidget->SetAnimation(ui->animateBox->isChecked());
 
-    SetColorButtonIcon(Qt::black);
+   SetColorButtonIcon(Qt::black);
 }
 
 MainWindow::~MainWindow()

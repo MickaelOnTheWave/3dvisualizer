@@ -18,6 +18,7 @@ add_subdirectory(libs)
 set(PROJECT_SOURCES
         src/main.cpp
         src/RendererGlWindow.h src/RendererGlWindow.cpp
+        src/TextureModel.h src/TextureModel.cpp
         src/MainWindow.cpp src/MainWindow.h src/MainWindow.ui
         src/RenderDataWidget.h src/RenderDataWidget.cpp src/RenderDataWidget.ui
         src/GenericDialog.h src/GenericDialog.cpp src/GenericDialog.ui

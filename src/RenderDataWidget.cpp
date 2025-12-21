@@ -5,44 +5,40 @@ RenderDataWidget::RenderDataWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::RenderDataWidget)
 {
-    ui->setupUi(this);
+   ui->setupUi(this);
 
-    ui->texturesView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->materialsView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+   ui->materialsView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+   ui->texturesView->setModel(&textureModel);
+   ui->texturesView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+   auto *header = ui->texturesView->horizontalHeader();
+   header->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+   header->setSectionResizeMode(1, QHeaderView::Stretch);
 }
 
 RenderDataWidget::~RenderDataWidget()
 {
-    delete ui;
+   delete ui;
 }
 
 void RenderDataWidget::SetRenderer(GlRenderer* _renderer)
 {
-    renderer = _renderer;
-    OnUpdateData();
+   renderer = _renderer;
+   OnUpdateData();
 }
 
 void RenderDataWidget::OnUpdateData()
 {
-    FillTextures();
-    FillMaterials();
-    FillObjects();
-    FillInstances();
+   FillTextures();
+   FillMaterials();
+   FillObjects();
+   FillInstances();
 }
 
 void RenderDataWidget::FillTextures()
 {
-   const std::vector<GlTexture> textures = renderer->GetTextures();
-   ui->texturesView->setRowCount(textures.size());
-   ui->texturesView->setColumnCount(2);
-
-   int i=0;
-   for (const auto texture : textures)
-   {
-      AddToTable(ui->texturesView, i, 0, texture.textureId);
-      AddToTable(ui->texturesView, i, 1, texture.GetName());
-      ++i;
-   }
+   textureModel.Reset(renderer->GetTextures());
 }
 
 void RenderDataWidget::FillMaterials()

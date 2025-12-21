@@ -21,23 +21,13 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_10">
       <item>
-       <widget class="QTableWidget" name="texturesView">
-        <attribute name="horizontalHeaderVisible">
-         <bool>true</bool>
+       <widget class="QTableView" name="texturesView">
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>38</number>
         </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>21</number>
         </attribute>
-        <column>
-         <property name="text">
-          <string>Id</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Name</string>
-         </property>
-        </column>
        </widget>
       </item>
      </layout>
