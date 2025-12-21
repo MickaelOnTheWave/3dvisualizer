@@ -1,13 +1,17 @@
 #include "RenderDataWidget.h"
 #include "ui_RenderDataWidget.h"
 
+#include "DataEditorWidget.h"
+
 RenderDataWidget::RenderDataWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::RenderDataWidget)
 {
    ui->setupUi(this);
 
-   ui->materialsView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+   auto materialEditor = new DataEditorWidget();
+   materialEditor->SetModel(&materialModel);
+   ui->materialsBox->layout()->addWidget(materialEditor);
 
    ui->texturesView->setModel(&textureModel);
    ui->texturesView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -43,19 +47,7 @@ void RenderDataWidget::FillTextures()
 
 void RenderDataWidget::FillMaterials()
 {
-    const std::vector<Material*> materials = renderer->GetMaterials();
-    ui->materialsView->setRowCount(materials.size());
-    ui->materialsView->setColumnCount(4);
-
-    int i=0;
-    for (const auto material : materials)
-    {
-        AddToTable(ui->materialsView, i, 0, material->GetName());
-        AddToTable(ui->materialsView, i, 1, material->diffuseTextureId);
-        AddToTable(ui->materialsView, i, 2, material->specularTextureId);
-        AddToTable(ui->materialsView, i, 3, material->shininess);
-        ++i;
-    }
+   materialModel.Reset(renderer->GetMaterials());
 }
 
 void RenderDataWidget::FillObjects()

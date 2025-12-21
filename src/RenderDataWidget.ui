@@ -38,35 +38,7 @@
      <property name="title">
       <string>Materials</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_9">
-      <item>
-       <widget class="QTableWidget" name="materialsView">
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Name</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>DiffuseId</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>SpecId</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Shininess</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="verticalLayout_9"/>
     </widget>
    </item>
    <item>
