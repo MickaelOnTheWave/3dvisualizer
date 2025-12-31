@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include <QAbstractTableModel>
+#include "models/AbstractDataModel.h"
 
 namespace Ui {
 class DataEditorWidget;
@@ -14,13 +14,12 @@ class DataEditorWidget : public QWidget
    Q_OBJECT
 
 public:
-   explicit DataEditorWidget(QWidget *parent = nullptr);
+   explicit DataEditorWidget(IDataModel* model, QWidget *parent = nullptr);
    ~DataEditorWidget();
 
-   void SetModel(QAbstractTableModel* model);
-
-
 private:
+   void SetModel(IDataModel* model);
+
    Ui::DataEditorWidget *ui;
 };
 

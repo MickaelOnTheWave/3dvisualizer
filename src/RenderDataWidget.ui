@@ -19,18 +19,7 @@
      <property name="title">
       <string>Textures</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_10">
-      <item>
-       <widget class="QTableView" name="texturesView">
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>38</number>
-        </attribute>
-        <attribute name="verticalHeaderDefaultSectionSize">
-         <number>21</number>
-        </attribute>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="verticalLayout_10"/>
     </widget>
    </item>
    <item>

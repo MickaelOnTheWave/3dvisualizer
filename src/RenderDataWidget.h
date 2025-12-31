@@ -6,8 +6,8 @@
 #include <QTableWidget>
 
 #include "GlRenderer.h"
-#include "MaterialModel.h"
-#include "TextureModel.h"
+#include "models/MaterialModel.h"
+#include "models/TextureModel.h"
 
 namespace Ui {
 class RenderDataWidget;

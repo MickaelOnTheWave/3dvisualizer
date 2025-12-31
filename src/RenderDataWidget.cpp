@@ -9,16 +9,8 @@ RenderDataWidget::RenderDataWidget(QWidget *parent)
 {
    ui->setupUi(this);
 
-   auto materialEditor = new DataEditorWidget();
-   materialEditor->SetModel(&materialModel);
-   ui->materialsBox->layout()->addWidget(materialEditor);
-
-   ui->texturesView->setModel(&textureModel);
-   ui->texturesView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-   auto *header = ui->texturesView->horizontalHeader();
-   header->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-   header->setSectionResizeMode(1, QHeaderView::Stretch);
+   ui->materialsBox->layout()->addWidget(new DataEditorWidget(&materialModel));
+   ui->texturesBox->layout()->addWidget(new DataEditorWidget(&textureModel));
 }
 
 RenderDataWidget::~RenderDataWidget()
