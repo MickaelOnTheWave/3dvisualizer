@@ -35,25 +35,7 @@
      <property name="title">
       <string>Objects</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QTableWidget" name="objectsView">
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>New Column</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>MaterialId</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="verticalLayout_2"/>
     </widget>
    </item>
    <item>
@@ -61,22 +43,7 @@
      <property name="title">
       <string>Instances</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="QTableWidget" name="instancesView">
-        <column>
-         <property name="text">
-          <string>Name</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>ObjectId</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="verticalLayout_3"/>
     </widget>
    </item>
   </layout>

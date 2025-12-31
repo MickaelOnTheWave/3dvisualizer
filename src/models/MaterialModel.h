@@ -8,12 +8,12 @@
 
 class MaterialModel : public AbstractDataModel<Material*>
 {
+   Q_OBJECT
+
 public:
    explicit MaterialModel(QObject *parent = nullptr);
 
    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-
-   //void Reset(const std::vector<Material*> &_data);
 
 private:
    QVariant GetDataAtColumn(Material* const& data, const int column) const override;

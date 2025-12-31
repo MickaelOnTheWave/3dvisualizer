@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         src/models/AbstractDataModel.h
         src/models/TextureModel.h src/models/TextureModel.cpp
         src/models/MaterialModel.h src/models/MaterialModel.cpp
+        src/models/ObjectModel.h src/models/ObjectModel.cpp
+        src/models/InstanceModel.h src/models/InstanceModel.cpp
         src/MainWindow.cpp src/MainWindow.h src/MainWindow.ui
         src/RenderDataWidget.h src/RenderDataWidget.cpp src/RenderDataWidget.ui
         src/GenericDialog.h src/GenericDialog.cpp src/GenericDialog.ui
