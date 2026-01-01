@@ -3,15 +3,14 @@
 
 #include "GenericDialog.h"
 
-// TEMP
-#include "resourcewidgets/AddTextureWidget.h"
-
-DataEditorWidget::DataEditorWidget(IDataModel* model, QWidget* parent)
+DataEditorWidget::DataEditorWidget(IDataModel* _model, AddResourceWidget* _resourceWidget, QWidget* parent)
    : QWidget(parent)
-   , ui(new Ui::DataEditorWidget)
+   , ui(new Ui::DataEditorWidget),
+   model(_model),
+   resourceWidget(_resourceWidget)
 {
    ui->setupUi(this);
-   SetModel(model);
+   InitializeModel();
 
    connect(ui->addButton, &QPushButton::clicked, this, &DataEditorWidget::OnAddResource);
 }
@@ -21,28 +20,33 @@ DataEditorWidget::~DataEditorWidget()
    delete ui;
 }
 
+void DataEditorWidget::SetRenderer(GlRenderer* _renderer)
+{
+   renderer = _renderer;
+}
+
 void DataEditorWidget::OnAddResource()
 {
-   auto contentWidget = new AddTextureWidget();
-   auto addResourceWidget = new GenericDialog(contentWidget, true, this);
-   addResourceWidget->setMinimumSize(contentWidget->size());
+   auto resourceDialog= new GenericDialog(resourceWidget, true, this);
+   resourceDialog->setMinimumSize(resourceWidget->size());
 
-   connect(addResourceWidget, &QDialog::accepted, this, &DataEditorWidget::OnNewResourceConfirmed);
-   connect(addResourceWidget, &QDialog::rejected, [addResourceWidget]() {
-      addResourceWidget->close();
+   connect(resourceDialog, &QDialog::accepted, this, &DataEditorWidget::OnNewResourceConfirmed);
+   connect(resourceDialog, &QDialog::rejected, [resourceDialog]() {
+      resourceDialog->close();
    });
 
-   addResourceWidget->show();
-   addResourceWidget->raise();
-   addResourceWidget->activateWindow();
+   resourceDialog->show();
+   resourceDialog->raise();
+   resourceDialog->activateWindow();
 }
 
 void DataEditorWidget::OnNewResourceConfirmed()
 {
-
+   const QStringList modelData = resourceWidget->AddDataToRenderer(renderer);
+   AddToModel(modelData);
 }
 
-void DataEditorWidget::SetModel(IDataModel* model)
+void DataEditorWidget::InitializeModel()
 {
    ui->tableView->setModel(model);
    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -50,4 +54,16 @@ void DataEditorWidget::SetModel(IDataModel* model)
    auto *header = ui->tableView->horizontalHeader();
    for (int i=0; i<model->rowCount(); ++i)
       header->setSectionResizeMode(i, model->GetSizingAtColumn(i));
+}
+
+void DataEditorWidget::AddToModel(const QStringList rowData)
+{
+   const int rowIndex = model->rowCount();
+   model->insertRow(rowIndex);
+
+   for (int i=0; i<rowData.count(); ++i)
+   {
+      const QModelIndex index = model->index(rowIndex, i);
+      model->setData(index, rowData[i]);
+   }
 }

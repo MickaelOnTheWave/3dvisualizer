@@ -1,19 +1,21 @@
 #ifndef ADDTEXTUREWIDGET_H
 #define ADDTEXTUREWIDGET_H
 
-#include <QWidget>
+#include "AddResourceWidget.h"
 
 namespace Ui {
 class AddTextureWidget;
 }
 
-class AddTextureWidget : public QWidget
+class AddTextureWidget : public AddResourceWidget
 {
    Q_OBJECT
 
 public:
    explicit AddTextureWidget(QWidget *parent = nullptr);
    ~AddTextureWidget();
+
+   QStringList AddDataToRenderer(GlRenderer* renderer) override;
 
 private:
    Ui::AddTextureWidget *ui;

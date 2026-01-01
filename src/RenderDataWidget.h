@@ -3,8 +3,10 @@
 
 #include <QWidget>
 
+#include <QGroupBox>
 #include <QTableWidget>
 
+#include "DataEditorWidget.h"
 #include "GlRenderer.h"
 #include "models/InstanceModel.h"
 #include "models/MaterialModel.h"
@@ -29,6 +31,10 @@ public slots:
     void OnUpdateData();
 
 private:
+    void AddEditor(QGroupBox* container,
+                  IDataModel* model,
+                  AddResourceWidget* resourceWidget);
+
     Ui::RenderDataWidget *ui;
 
     GlRenderer* renderer = nullptr;
@@ -36,6 +42,8 @@ private:
     MaterialModel materialModel;
     ObjectModel objectModel;
     InstanceModel instanceModel;
+
+    std::vector<DataEditorWidget*> editorWidgets;
 };
 
 #endif // RENDERDATAWIDGET_H

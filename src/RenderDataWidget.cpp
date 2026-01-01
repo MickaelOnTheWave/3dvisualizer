@@ -1,7 +1,7 @@
 #include "RenderDataWidget.h"
 #include "ui_RenderDataWidget.h"
 
-#include "DataEditorWidget.h"
+#include "resourcewidgets/AddTextureWidget.h"
 
 RenderDataWidget::RenderDataWidget(QWidget *parent)
     : QWidget(parent)
@@ -9,10 +9,10 @@ RenderDataWidget::RenderDataWidget(QWidget *parent)
 {
    ui->setupUi(this);
 
-   ui->materialsBox->layout()->addWidget(new DataEditorWidget(&materialModel));
-   ui->texturesBox->layout()->addWidget(new DataEditorWidget(&textureModel));
-   ui->objectsBox->layout()->addWidget(new DataEditorWidget(&objectModel));
-   ui->instancesBox->layout()->addWidget(new DataEditorWidget(&instanceModel));
+   AddEditor(ui->materialsBox, &materialModel, new AddTextureWidget());
+   AddEditor(ui->texturesBox, &textureModel, new AddTextureWidget());
+   AddEditor(ui->objectsBox, &objectModel, new AddTextureWidget());
+   AddEditor(ui->instancesBox, &instanceModel, new AddTextureWidget());
 }
 
 RenderDataWidget::~RenderDataWidget()
@@ -23,6 +23,8 @@ RenderDataWidget::~RenderDataWidget()
 void RenderDataWidget::SetRenderer(GlRenderer* _renderer)
 {
    renderer = _renderer;
+   for (const auto editor : editorWidgets)
+      editor->SetRenderer(renderer);
    OnUpdateData();
 }
 
@@ -32,4 +34,11 @@ void RenderDataWidget::OnUpdateData()
    materialModel.Reset(renderer->GetMaterials());
    objectModel.Reset(renderer->ComputeRenderObjectsList());
    instanceModel.Reset(renderer->ComputeInstancesList());
+}
+
+void RenderDataWidget::AddEditor(QGroupBox* container, IDataModel* model, AddResourceWidget* resourceWidget)
+{
+   auto editorWidget = new DataEditorWidget(model, resourceWidget);
+   container->layout()->addWidget(editorWidget);
+   editorWidgets.push_back(editorWidget);
 }

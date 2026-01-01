@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
         src/models/MaterialModel.h src/models/MaterialModel.cpp
         src/models/ObjectModel.h src/models/ObjectModel.cpp
         src/models/InstanceModel.h src/models/InstanceModel.cpp
+        src/resourcewidgets/AddResourceWidget.h
         src/MainWindow.cpp src/MainWindow.h src/MainWindow.ui
         src/RenderDataWidget.h src/RenderDataWidget.cpp src/RenderDataWidget.ui
         src/GenericDialog.h src/GenericDialog.cpp src/GenericDialog.ui
