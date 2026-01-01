@@ -12,7 +12,7 @@ class GenericDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit GenericDialog(QWidget* contentWidget, QWidget *parent = nullptr);
+    explicit GenericDialog(QWidget* contentWidget, bool showCloseButtons, QWidget *parent = nullptr);
     ~GenericDialog();
 
 private:

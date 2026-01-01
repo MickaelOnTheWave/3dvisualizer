@@ -17,6 +17,10 @@ public:
    explicit DataEditorWidget(IDataModel* model, QWidget *parent = nullptr);
    ~DataEditorWidget();
 
+private slots:
+   void OnAddResource();
+   void OnNewResourceConfirmed();
+
 private:
    void SetModel(IDataModel* model);
 

@@ -27,6 +27,7 @@ set(PROJECT_SOURCES
         src/RenderDataWidget.h src/RenderDataWidget.cpp src/RenderDataWidget.ui
         src/GenericDialog.h src/GenericDialog.cpp src/GenericDialog.ui
         src/DataEditorWidget.h src/DataEditorWidget.cpp src/DataEditorWidget.ui
+        src/resourcewidgets/AddTextureWidget.h src/resourcewidgets/AddTextureWidget.cpp src/resourcewidgets/AddTextureWidget.ui
 )
 
 qt_add_executable(3dVisualizer

@@ -65,7 +65,7 @@ void MainWindow::OnActionOpenRenderData()
     {
         auto contentWidget = new RenderDataWidget();
         contentWidget->SetRenderer(renderer.get());
-        renderDataWidget = new GenericDialog(contentWidget, this);
+        renderDataWidget = new GenericDialog(contentWidget, false, this);
         renderDataWidget->setMinimumSize(contentWidget->size());
     }
     renderDataWidget->show();
