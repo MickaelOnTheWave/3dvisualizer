@@ -17,6 +17,10 @@ public:
 
    QStringList AddDataToRenderer(GlRenderer* renderer) override;
 
+private slots:
+   void OnChoosePlainColor();
+   void OnChooseFile();
+
 private:
    Ui::AddTextureWidget *ui;
 };

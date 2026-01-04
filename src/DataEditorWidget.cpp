@@ -30,7 +30,10 @@ void DataEditorWidget::OnAddResource()
    auto resourceDialog= new GenericDialog(resourceWidget, true, this);
    resourceDialog->setMinimumSize(resourceWidget->size());
 
-   connect(resourceDialog, &QDialog::accepted, this, &DataEditorWidget::OnNewResourceConfirmed);
+   connect(resourceDialog, &QDialog::accepted, [this, resourceDialog]() {
+      OnNewResourceConfirmed();
+      resourceDialog->close();
+   });
    connect(resourceDialog, &QDialog::rejected, [resourceDialog]() {
       resourceDialog->close();
    });
