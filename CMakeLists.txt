@@ -16,19 +16,20 @@ set_directory_properties(PROPERTIES COMPILE_DEFINITIONS KITGL_SUPPORT_GLFW=0)
 add_subdirectory(libs)
 
 set(PROJECT_SOURCES
-        src/main.cpp
-        src/RendererGlWindow.h src/RendererGlWindow.cpp
-        src/models/AbstractDataModel.h
-        src/models/TextureModel.h src/models/TextureModel.cpp
-        src/models/MaterialModel.h src/models/MaterialModel.cpp
-        src/models/ObjectModel.h src/models/ObjectModel.cpp
-        src/models/InstanceModel.h src/models/InstanceModel.cpp
-        src/resourcewidgets/AddResourceWidget.h
-        src/MainWindow.cpp src/MainWindow.h src/MainWindow.ui
-        src/RenderDataWidget.h src/RenderDataWidget.cpp src/RenderDataWidget.ui
-        src/GenericDialog.h src/GenericDialog.cpp src/GenericDialog.ui
-        src/DataEditorWidget.h src/DataEditorWidget.cpp src/DataEditorWidget.ui
-        src/resourcewidgets/AddTextureWidget.h src/resourcewidgets/AddTextureWidget.cpp src/resourcewidgets/AddTextureWidget.ui
+   src/main.cpp
+   src/RendererGlWindow.h src/RendererGlWindow.cpp
+   src/models/AbstractDataModel.h
+   src/models/TextureModel.h src/models/TextureModel.cpp
+   src/models/MaterialModel.h src/models/MaterialModel.cpp
+   src/models/ObjectModel.h src/models/ObjectModel.cpp
+   src/models/InstanceModel.h src/models/InstanceModel.cpp
+   src/resourcewidgets/AddResourceWidget.h
+   src/MainWindow.cpp src/MainWindow.h src/MainWindow.ui
+   src/RenderDataWidget.h src/RenderDataWidget.cpp src/RenderDataWidget.ui
+   src/GenericDialog.h src/GenericDialog.cpp src/GenericDialog.ui
+   src/DataEditorWidget.h src/DataEditorWidget.cpp src/DataEditorWidget.ui
+   src/resourcewidgets/AddTextureWidget.h src/resourcewidgets/AddTextureWidget.cpp src/resourcewidgets/AddTextureWidget.ui
+   src/resourcewidgets/AddMaterialWidget.h src/resourcewidgets/AddMaterialWidget.cpp src/resourcewidgets/AddMaterialWidget.ui
 )
 
 qt_add_executable(3dVisualizer

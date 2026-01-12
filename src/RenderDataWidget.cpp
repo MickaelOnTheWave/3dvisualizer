@@ -1,6 +1,7 @@
 #include "RenderDataWidget.h"
 #include "ui_RenderDataWidget.h"
 
+#include "resourcewidgets/AddMaterialWidget.h"
 #include "resourcewidgets/AddTextureWidget.h"
 
 RenderDataWidget::RenderDataWidget(QWidget *parent)
@@ -9,7 +10,7 @@ RenderDataWidget::RenderDataWidget(QWidget *parent)
 {
    ui->setupUi(this);
 
-   AddEditor(ui->materialsBox, &materialModel, new AddTextureWidget());
+   AddEditor(ui->materialsBox, &materialModel, new AddMaterialWidget());
    AddEditor(ui->texturesBox, &textureModel, new AddTextureWidget());
    AddEditor(ui->objectsBox, &objectModel, new AddTextureWidget());
    AddEditor(ui->instancesBox, &instanceModel, new AddTextureWidget());
