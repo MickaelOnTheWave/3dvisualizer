@@ -42,4 +42,6 @@ void RenderDataWidget::AddEditor(QGroupBox* container, IDataModel* model, AddRes
    auto editorWidget = new DataEditorWidget(model, resourceWidget);
    container->layout()->addWidget(editorWidget);
    editorWidgets.push_back(editorWidget);
+
+   connect(editorWidget, &DataEditorWidget::RequestDataRefresh, this, &RenderDataWidget::OnUpdateData);
 }

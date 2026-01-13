@@ -15,6 +15,14 @@ public:
    }
 
    virtual QHeaderView::ResizeMode GetSizingAtColumn(const int column) const = 0;
+
+   Qt::ItemFlags flags(const QModelIndex& index) const override
+   {
+      if (!index.isValid())
+         return Qt::NoItemFlags;
+
+      return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+   }
 };
 
 template <class T>

@@ -46,7 +46,7 @@ void DataEditorWidget::OnAddResource()
 void DataEditorWidget::OnNewResourceConfirmed()
 {
    const QStringList modelData = resourceWidget->AddDataToRenderer(renderer);
-   AddToModel(modelData);
+   emit RequestDataRefresh();
 }
 
 void DataEditorWidget::InitializeModel()
@@ -55,18 +55,6 @@ void DataEditorWidget::InitializeModel()
    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
    auto *header = ui->tableView->horizontalHeader();
-   for (int i=0; i<model->rowCount(); ++i)
+   for (int i=0; i<model->columnCount(); ++i)
       header->setSectionResizeMode(i, model->GetSizingAtColumn(i));
-}
-
-void DataEditorWidget::AddToModel(const QStringList rowData)
-{
-   const int rowIndex = model->rowCount();
-   model->insertRow(rowIndex);
-
-   for (int i=0; i<rowData.count(); ++i)
-   {
-      const QModelIndex index = model->index(rowIndex, i);
-      model->setData(index, rowData[i]);
-   }
 }

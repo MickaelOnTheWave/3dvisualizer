@@ -22,13 +22,15 @@ public:
 
    void SetRenderer(GlRenderer* _renderer);
 
+signals:
+   void RequestDataRefresh();
+
 private slots:
    void OnAddResource();
    void OnNewResourceConfirmed();
 
 private:
    void InitializeModel();
-   void AddToModel(const QStringList rowData);
 
    Ui::DataEditorWidget *ui;
    AddResourceWidget* resourceWidget;
