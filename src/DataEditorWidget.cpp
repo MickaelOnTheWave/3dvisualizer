@@ -45,7 +45,7 @@ void DataEditorWidget::OnAddResource()
 
 void DataEditorWidget::OnNewResourceConfirmed()
 {
-   const QStringList modelData = resourceWidget->AddDataToRenderer(renderer);
+   resourceWidget->AddDataToRenderer(renderer);
    emit RequestDataRefresh();
 }
 

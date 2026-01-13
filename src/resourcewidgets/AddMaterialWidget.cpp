@@ -13,16 +13,14 @@ AddMaterialWidget::~AddMaterialWidget()
    delete ui;
 }
 
-QStringList AddMaterialWidget::AddDataToRenderer(GlRenderer* renderer)
+void AddMaterialWidget::AddDataToRenderer(GlRenderer* renderer)
 {
    const std::string materialName = ui->nameEdit->text().toUtf8().constData();
 
    auto material = new Material(materialName);
-   material->diffuseTextureId = 1;
-   material->specularTextureId = 1;
+   material->diffuseTextureId = ui->diffuseBox->value();
+   material->specularTextureId = ui->specularBox->value();
    material->shininess = ui->shininessSpin->value();
 
    renderer->AddMaterial(material);
-   //return {ui->nameEdit->text()};
-   return {};
 }

@@ -15,7 +15,7 @@ public:
    explicit AddTextureWidget(QWidget *parent = nullptr);
    ~AddTextureWidget();
 
-   QStringList AddDataToRenderer(GlRenderer* renderer) override;
+   void AddDataToRenderer(GlRenderer* renderer) override;
 
 private slots:
    void OnChoosePlainColor();

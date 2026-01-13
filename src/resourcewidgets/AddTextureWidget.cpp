@@ -19,13 +19,13 @@ AddTextureWidget::~AddTextureWidget()
    delete ui;
 }
 
-QStringList AddTextureWidget::AddDataToRenderer(GlRenderer* renderer)
+void AddTextureWidget::AddDataToRenderer(GlRenderer* renderer)
 {
    const std::string textureName = ui->nameEdit->text().toUtf8().constData();
 
+   // TODO Get real data
    ImageData imageData;
-   const unsigned int textureId = renderer->AddTexture(imageData, textureName);
-   return {QString::number(textureId), ui->nameEdit->text()};
+   renderer->AddTexture(imageData, textureName);
 }
 
 void AddTextureWidget::OnChoosePlainColor()

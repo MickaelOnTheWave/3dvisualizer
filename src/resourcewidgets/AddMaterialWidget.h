@@ -15,7 +15,7 @@ public:
    explicit AddMaterialWidget(QWidget *parent = nullptr);
    ~AddMaterialWidget();
 
-   QStringList AddDataToRenderer(GlRenderer* renderer) override;
+   void AddDataToRenderer(GlRenderer* renderer) override;
 
 private:
    Ui::AddMaterialWidget *ui;
