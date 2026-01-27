@@ -21,20 +21,20 @@ RenderDataWidget::~RenderDataWidget()
    delete ui;
 }
 
-void RenderDataWidget::SetRenderer(GlRenderer* _renderer)
+void RenderDataWidget::SetScene(Scene* _scene)
 {
-   renderer = _renderer;
+   scene = _scene;
    for (const auto editor : editorWidgets)
-      editor->SetRenderer(renderer);
+      editor->SetScene(scene);
    OnUpdateData();
 }
 
 void RenderDataWidget::OnUpdateData()
 {
-   textureModel.Reset(renderer->GetTextures());
-   materialModel.Reset(renderer->GetMaterials());
-   objectModel.Reset(renderer->ComputeRenderObjectsList());
-   instanceModel.Reset(renderer->ComputeInstancesList());
+   textureModel.Reset(scene->GetTextures());
+   materialModel.Reset(scene->GetMaterials());
+   objectModel.Reset(scene->ComputeRenderObjectsList());
+   instanceModel.Reset(scene->ComputeInstancesList());
 }
 
 void RenderDataWidget::AddEditor(QGroupBox* container, IDataModel* model, AddResourceWidget* resourceWidget)

@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "GlRenderer.h"
+#include "scene/Scene.h"
 
 class AddResourceWidget : public QWidget
 {
@@ -20,7 +20,7 @@ public:
     *
     * @param renderer
     */
-   virtual void AddDataToRenderer(GlRenderer* renderer) = 0;
+   virtual void AddDataToScene(Scene* scene) = 0;
 signals:
 };
 

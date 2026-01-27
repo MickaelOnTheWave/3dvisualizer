@@ -1,6 +1,7 @@
 #include "RendererGlWindow.h"
 
-#include "objects/GlRenderCube.h"
+#include "scene/resources/Camera.h"
+#include "scene/resources/geometries/Box.h"
 
 RendererGlWindow::RendererGlWindow(QWidget *parent)
   : QOpenGLWidget(parent)
@@ -8,10 +9,9 @@ RendererGlWindow::RendererGlWindow(QWidget *parent)
    connect(&renderTimer, &QTimer::timeout, this, [this]() {update();});
 }
 
-void RendererGlWindow::SetRenderer(std::shared_ptr<GlRenderer> _renderer)
+void RendererGlWindow::SetRenderer(std::shared_ptr<AbstractRenderer> _renderer)
 {
    renderer = _renderer;
-   currentCamera = dynamic_cast<OrbitCamera*>(renderer->GetCamera());
 }
 
 void RendererGlWindow::SetAnimation(const bool enabled)
@@ -31,13 +31,14 @@ void RendererGlWindow::initializeGL()
         return;
     }
 
-   renderer->Initialize({new ShaderProgram("data/basic.vert", "data/singleTexture.frag", "Simple Texturing")});
+   CreateDefaultScenes();
+
+   //renderer->Initialize({new ShaderProgram("data/basic.vert", "data/singleTexture.frag", "Simple Texturing")});
+   renderer->Initialize();
 
    renderer->SetClearColor(0.0f, 0.0f, 0.0f);
 
-   AddObjects();
-
-   renderer->PrepareRendering();
+   //renderer->PrepareRendering();
    if (renderer->HasError())
        emit RendererError(QString::fromUtf8(renderer->GetError()));
 }
@@ -48,29 +49,41 @@ void RendererGlWindow::resizeGL(int w, int h)
 
 void RendererGlWindow::paintGL()
 {
-    if (animate)
-      currentCamera->RotateInY(2.0f);
+    //if (animate)
+    //  currentCamera->RotateInY(2.0f);
 
-    renderer->Render();
+    renderer->Render(defaultScenes.front());
     if (renderer->HasError())
         emit RendererError(QString::fromUtf8(renderer->GetError()));
 }
 
-void RendererGlWindow::AddObjects()
+void RendererGlWindow::CreateDefaultScenes()
 {
-    const int channelCount = 3;
-    const unsigned int whiteTextureId = renderer->AddTexture(Vector3(1,1,1), "Plain White");
-    const unsigned int textureId = renderer->AddTexture("data/eye-blue.jpg", channelCount, "Eye");
-    auto cubeMaterial = new Material("Eye");
-    cubeMaterial->diffuseTextureId = textureId;
-    cubeMaterial->specularTextureId = whiteTextureId;
-    cubeMaterial->shininess = 20.f;
-    renderer->AddMaterial(cubeMaterial);
+   Scene cubeScene;
+   const unsigned int whiteTextureId = cubeScene.AddTexture(Vector3(1,1,1), "Plain White");
+   const unsigned int eyeTextureId = cubeScene.AddTexture("data/eye-blue.jpg", "Eye Texture");
 
-    auto cube = new GlRenderCube(cubeMaterial, "EyedCube");
-    cube->Initialize();
-    Matrix4x4 cubePos = Matrix4x4::Scale(1.f);
-    auto cubeInstance = new GlRenderedInstance(cube, cubePos, "Main Object");
+   Material eyeMaterial("Eye Material");
+   eyeMaterial.diffuseTextureId = eyeTextureId;
+   eyeMaterial.specularTextureId = whiteTextureId;
+   eyeMaterial.shininess = 20.f;
+   const unsigned int eyeMaterialId = cubeScene.AddMaterial(eyeMaterial);
 
-    renderer->AddRenderObject(cubeInstance);
+   auto eyeCube = new Box();
+   eyeCube->SetCenter(Vector3(0, 0, 0));
+   eyeCube->SetSizes(Vector3(1, 1, 1));
+   const unsigned int eyeCubeId = cubeScene.AddGeometry(eyeCube);
+
+   const unsigned int eyeModelId = cubeScene.AddSinglePartModel(eyeCubeId, eyeMaterialId, "Eye Model");
+
+   auto eyeInstance = new ModelInstance("Eye Instance 0");
+   eyeInstance->SetModelId(eyeModelId);
+   eyeInstance->SetTransform(Matrix4x4::Identity());
+   eyeInstance->SetColor(Vector3(1, 0, 0));
+   cubeScene.AddInstance(eyeInstance);
+
+   auto defaultCamera = new Camera("Default Camera");
+   cubeScene.AddCamera(defaultCamera);
+
+   defaultScenes.push_back(cubeScene);
 }

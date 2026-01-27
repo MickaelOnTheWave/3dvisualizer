@@ -20,9 +20,9 @@ DataEditorWidget::~DataEditorWidget()
    delete ui;
 }
 
-void DataEditorWidget::SetRenderer(GlRenderer* _renderer)
+void DataEditorWidget::SetScene(Scene* _scene)
 {
-   renderer = _renderer;
+   scene = _scene;
 }
 
 void DataEditorWidget::OnAddResource()

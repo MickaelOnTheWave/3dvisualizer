@@ -19,13 +19,13 @@ AddTextureWidget::~AddTextureWidget()
    delete ui;
 }
 
-void AddTextureWidget::AddDataToRenderer(GlRenderer* renderer)
+void AddTextureWidget::AddDataToScene(Scene* scene)
 {
    const std::string textureName = ui->nameEdit->text().toUtf8().constData();
 
    // TODO Get real data
    ImageData imageData;
-   renderer->AddTexture(imageData, textureName);
+   scene->AddTexture(Vector3(0, 1, 1), textureName);
 }
 
 void AddTextureWidget::OnChoosePlainColor()

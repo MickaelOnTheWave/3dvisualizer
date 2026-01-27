@@ -3,6 +3,7 @@
 
 #include <QColorDialog>
 #include "RenderDataWidget.h"
+#include "renderers/OpenGlRenderer.h"
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
@@ -11,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
    ui->setupUi(this);
    ui->stackedWidget->setCurrentWidget(ui->opengl);
 
-   CreateRenderer();
+   InitializeRendering();
    ui->openGLWidget->SetRenderer(renderer);
 
    connect(ui->actionOpenRenderData, &QAction::triggered, this, &MainWindow::OnActionOpenRenderData);
@@ -34,7 +35,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnEnableWireframe(const bool enabled)
 {
-   renderer->EnableWireframeMode(enabled);
+   auto glRenderer = std::dynamic_pointer_cast<OpenGlRenderer>(renderer);
+   glRenderer->EnableWireframeMode(enabled);
 }
 
 void MainWindow::OnRendererError(const QString& message)
@@ -64,7 +66,7 @@ void MainWindow::OnActionOpenRenderData()
     if (!renderDataWidget)
     {
         auto contentWidget = new RenderDataWidget();
-        contentWidget->SetRenderer(renderer.get());
+        contentWidget->SetScene(scene.get());
         renderDataWidget = new GenericDialog(contentWidget, false, this);
         renderDataWidget->setMinimumSize(contentWidget->size());
     }
@@ -73,13 +75,14 @@ void MainWindow::OnActionOpenRenderData()
     renderDataWidget->activateWindow();
 }
 
-void MainWindow::CreateRenderer()
+void MainWindow::InitializeRendering()
 {
    camera = std::make_shared<OrbitCamera>(Vector3(0.f, 0.f, 0.f));
    camera->CloseOut(4.0f);
    camera->RotateInX(20.f);
 
-   renderer = std::make_shared<GlRenderer>(camera.get());
+   scene = std::make_shared<Scene>();
+   renderer = std::make_shared<OpenGlRenderer>();
 }
 
 void MainWindow::UpdateClearColor(const QColor color)

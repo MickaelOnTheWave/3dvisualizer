@@ -7,11 +7,11 @@
 #include <QTableWidget>
 
 #include "DataEditorWidget.h"
-#include "GlRenderer.h"
 #include "models/InstanceModel.h"
 #include "models/MaterialModel.h"
 #include "models/ObjectModel.h"
 #include "models/TextureModel.h"
+#include "renderers/AbstractRenderer.h"
 
 namespace Ui {
 class RenderDataWidget;
@@ -25,7 +25,7 @@ public:
     explicit RenderDataWidget(QWidget *parent = nullptr);
     ~RenderDataWidget();
 
-    void SetRenderer(GlRenderer* _renderer);
+    void SetScene(Scene* _scene);
 
 public slots:
     void OnUpdateData();
@@ -37,7 +37,7 @@ private:
 
     Ui::RenderDataWidget *ui;
 
-    GlRenderer* renderer = nullptr;
+    Scene* scene;
     TextureModel textureModel;
     MaterialModel materialModel;
     ObjectModel objectModel;

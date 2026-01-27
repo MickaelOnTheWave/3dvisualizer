@@ -3,6 +3,8 @@
 
 #include "AddResourceWidget.h"
 
+#include "renderers/AbstractRenderer.h"
+
 namespace Ui {
 class AddTextureWidget;
 }
@@ -15,7 +17,7 @@ public:
    explicit AddTextureWidget(QWidget *parent = nullptr);
    ~AddTextureWidget();
 
-   void AddDataToRenderer(GlRenderer* renderer) override;
+   void AddDataToScene(Scene* scene) override;
 
 private slots:
    void OnChoosePlainColor();

@@ -4,9 +4,9 @@
 #include <QObject>
 
 #include "AbstractDataModel.h"
-#include "GlTexture.h"
+#include "scene/resources/Texture.h"
 
-class TextureModel : public AbstractDataModel<GlTexture>
+class TextureModel : public AbstractDataModel<Texture>
 {
    Q_OBJECT
 
@@ -16,7 +16,7 @@ public:
    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
-   QVariant GetDataAtColumn(const GlTexture& data, const int column) const override;
+   QVariant GetDataAtColumn(const Texture& data, const int column) const override;
    QString GetHeaderAtColumn(const int column) const override;
    QHeaderView::ResizeMode GetSizingAtColumn(const int column) const override;
 };

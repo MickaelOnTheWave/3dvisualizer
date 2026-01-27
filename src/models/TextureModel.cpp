@@ -10,11 +10,11 @@ int TextureModel::columnCount(const QModelIndex& parent) const
    return 2;
 }
 
-QVariant TextureModel::GetDataAtColumn(const GlTexture& data, const int column) const
+QVariant TextureModel::GetDataAtColumn(const Texture& data, const int column) const
 {
    switch (column)
    {
-      case 0: return data.textureId;
+      case 0: return data.GetId();
       case 1: return QString::fromUtf8(data.GetName());
       default: return QVariant();
    }

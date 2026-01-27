@@ -30,6 +30,7 @@ set(PROJECT_SOURCES
    src/DataEditorWidget.h src/DataEditorWidget.cpp src/DataEditorWidget.ui
    src/resourcewidgets/AddTextureWidget.h src/resourcewidgets/AddTextureWidget.cpp src/resourcewidgets/AddTextureWidget.ui
    src/resourcewidgets/AddMaterialWidget.h src/resourcewidgets/AddMaterialWidget.cpp src/resourcewidgets/AddMaterialWidget.ui
+   src/resourcewidgets/AddObjectWidget.h src/resourcewidgets/AddObjectWidget.cpp src/resourcewidgets/AddObjectWidget.ui
 )
 
 qt_add_executable(3dVisualizer

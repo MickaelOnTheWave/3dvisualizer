@@ -5,8 +5,9 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 
-#include "cameras/OrbitCamera.h"
-#include "GlRenderer.h"
+//#include "GlRenderer.h"
+#include "renderers/AbstractRenderer.h"
+#include "scene/Scene.h"
 
 class RendererGlWindow : public QOpenGLWidget
 {
@@ -15,7 +16,7 @@ class RendererGlWindow : public QOpenGLWidget
 public:
    RendererGlWindow(QWidget* parent);
 
-   void SetRenderer(std::shared_ptr<GlRenderer> _renderer);
+   void SetRenderer(std::shared_ptr<AbstractRenderer> _renderer);
 
    void SetAnimation(const bool enabled);
 
@@ -28,10 +29,13 @@ protected:
    void paintGL() override;
 
 private:
-   void AddObjects();
+   // TODO check - this probably belongs to main app, not gl window
 
-   std::shared_ptr<GlRenderer> renderer;
-   OrbitCamera* currentCamera;
+   void CreateDefaultScenes();
+
+   std::vector<Scene> defaultScenes;
+   std::shared_ptr<AbstractRenderer> renderer;
+
    QTimer renderTimer;
    bool animate = true;
 };

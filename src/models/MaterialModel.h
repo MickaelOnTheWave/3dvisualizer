@@ -4,7 +4,7 @@
 #include <QObject>
 
 #include "AbstractDataModel.h"
-#include "Material.h"
+#include "scene/resources/Material.h"
 
 class MaterialModel : public AbstractDataModel<Material*>
 {

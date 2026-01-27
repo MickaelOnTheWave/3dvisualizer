@@ -1,9 +1,11 @@
 #ifndef DATAEDITORWIDGET_H
 #define DATAEDITORWIDGET_H
 
+#include <memory>
 #include <QWidget>
 
 #include "models/AbstractDataModel.h"
+#include "renderers/AbstractRenderer.h"
 #include "resourcewidgets/AddResourceWidget.h"
 
 namespace Ui {
@@ -20,7 +22,7 @@ public:
                              QWidget *parent = nullptr);
    ~DataEditorWidget();
 
-   void SetRenderer(GlRenderer* _renderer);
+   void SetScene(Scene* _scene);
 
 signals:
    void RequestDataRefresh();
@@ -35,7 +37,7 @@ private:
    Ui::DataEditorWidget *ui;
    AddResourceWidget* resourceWidget;
    IDataModel* model;
-   GlRenderer* renderer;
+   Scene* scene;
 };
 
 #endif // DATAEDITORWIDGET_H
