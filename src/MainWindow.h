@@ -31,6 +31,7 @@ private slots:
 
 private:
    void InitializeRendering();
+   void CreateDefaultScenes();
    void UpdateClearColor(const QColor color);
    void SetColorButtonIcon(const QColor color);
 
@@ -38,7 +39,8 @@ private:
 
    GenericDialog* renderDataWidget = nullptr;
 
-   std::shared_ptr<Scene> scene = nullptr;
+   std::vector<std::shared_ptr<Scene>> defaultScenes;
+   std::shared_ptr<Scene> currentScene = nullptr;
    std::shared_ptr<AbstractRenderer> renderer = nullptr;
    std::shared_ptr<OrbitCamera> camera = nullptr;
 };

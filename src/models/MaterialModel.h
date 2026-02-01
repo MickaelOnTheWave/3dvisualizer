@@ -3,10 +3,10 @@
 
 #include <QObject>
 
-#include "AbstractDataModel.h"
+#include "AbstractValueModel.h"
 #include "scene/resources/Material.h"
 
-class MaterialModel : public AbstractDataModel<Material*>
+class MaterialModel : public AbstractValueModel<Material>
 {
    Q_OBJECT
 
@@ -16,7 +16,7 @@ public:
    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
-   QVariant GetDataAtColumn(Material* const& data, const int column) const override;
+   QVariant GetDataAtColumn(const Material& data, const int column) const override;
    QString GetHeaderAtColumn(const int column) const override;
    QHeaderView::ResizeMode GetSizingAtColumn(const int column) const override;
 

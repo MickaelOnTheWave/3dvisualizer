@@ -12,7 +12,8 @@ RenderDataWidget::RenderDataWidget(QWidget *parent)
 
    AddEditor(ui->materialsBox, &materialModel, new AddMaterialWidget());
    AddEditor(ui->texturesBox, &textureModel, new AddTextureWidget());
-   AddEditor(ui->objectsBox, &objectModel, new AddTextureWidget());
+   AddEditor(ui->geometriesBox, &geometryModel, new AddTextureWidget());
+   AddEditor(ui->modelsBox, &modelModel, new AddTextureWidget());
    AddEditor(ui->instancesBox, &instanceModel, new AddTextureWidget());
 }
 
@@ -33,8 +34,10 @@ void RenderDataWidget::OnUpdateData()
 {
    textureModel.Reset(scene->GetTextures());
    materialModel.Reset(scene->GetMaterials());
-   objectModel.Reset(scene->ComputeRenderObjectsList());
-   instanceModel.Reset(scene->ComputeInstancesList());
+   geometryModel.Reset(scene->GetGeometries());
+   modelModel.Reset(scene->GetModels());
+   //objectModel.Reset(scene->ComputeRenderObjectsList());
+   //instanceModel.Reset(scene->ComputeInstancesList());
 }
 
 void RenderDataWidget::AddEditor(QGroupBox* container, IDataModel* model, AddResourceWidget* resourceWidget)

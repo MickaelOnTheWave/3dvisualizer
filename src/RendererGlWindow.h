@@ -16,7 +16,8 @@ class RendererGlWindow : public QOpenGLWidget
 public:
    RendererGlWindow(QWidget* parent);
 
-   void SetRenderer(std::shared_ptr<AbstractRenderer> _renderer);
+   void SetRenderingData(std::shared_ptr<Scene> _scene,
+                         std::shared_ptr<AbstractRenderer> _renderer);
 
    void SetAnimation(const bool enabled);
 
@@ -29,11 +30,7 @@ protected:
    void paintGL() override;
 
 private:
-   // TODO check - this probably belongs to main app, not gl window
-
-   void CreateDefaultScenes();
-
-   std::vector<Scene> defaultScenes;
+   std::shared_ptr<Scene> scene;
    std::shared_ptr<AbstractRenderer> renderer;
 
    QTimer renderTimer;

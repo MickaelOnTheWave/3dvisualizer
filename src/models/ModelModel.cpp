@@ -1,41 +1,44 @@
-#include "TextureModel.h"
+#include "ModelModel.h"
 
-TextureModel::TextureModel(QObject *parent)
+ModelModel::ModelModel(QObject *parent)
    : AbstractReferenceModel(parent)
 {
 }
 
-int TextureModel::columnCount(const QModelIndex& parent) const
+int ModelModel::columnCount(const QModelIndex& parent) const
 {
-   return 2;
+   return 3;
 }
 
-QVariant TextureModel::GetDataAtColumn(Texture* data, const int column) const
+QVariant ModelModel::GetDataAtColumn(Model* data, const int column) const
 {
    switch (column)
    {
       case 0: return data->GetId();
       case 1: return QString::fromUtf8(data->GetName());
+      case 2: return QString::number(data->parts.size());
       default: return QVariant();
    }
 }
 
-QString TextureModel::GetHeaderAtColumn(const int column) const
+QString ModelModel::GetHeaderAtColumn(const int column) const
 {
    switch (column)
    {
       case 0: return QStringLiteral("Id");
       case 1: return QStringLiteral("Name");
+      case 2: return QStringLiteral("Parts Count");
    }
    return QStringLiteral("");
 }
 
-QHeaderView::ResizeMode TextureModel::GetSizingAtColumn(const int column) const
+QHeaderView::ResizeMode ModelModel::GetSizingAtColumn(const int column) const
 {
    switch (column)
    {
       case 0: return QHeaderView::ResizeToContents;
       case 1: return QHeaderView::Stretch;
+      case 2: return QHeaderView::ResizeToContents;
    }
    return QHeaderView::ResizeToContents;
 }

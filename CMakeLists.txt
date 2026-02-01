@@ -19,10 +19,15 @@ set(PROJECT_SOURCES
    src/main.cpp
    src/RendererGlWindow.h src/RendererGlWindow.cpp
    src/models/AbstractDataModel.h
+   src/models/AbstractReferenceModel.h
+   src/models/AbstractValueModel.h
    src/models/TextureModel.h src/models/TextureModel.cpp
    src/models/MaterialModel.h src/models/MaterialModel.cpp
    src/models/ObjectModel.h src/models/ObjectModel.cpp
    src/models/InstanceModel.h src/models/InstanceModel.cpp
+   src/models/GeometryModel.h src/models/GeometryModel.cpp
+   src/models/ModelModel.h src/models/ModelModel.cpp
+   src/models/ModelPartModel.h src/models/ModelPartModel.cpp
    src/resourcewidgets/AddResourceWidget.h
    src/MainWindow.cpp src/MainWindow.h src/MainWindow.ui
    src/RenderDataWidget.h src/RenderDataWidget.cpp src/RenderDataWidget.ui

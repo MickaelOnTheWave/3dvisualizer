@@ -4,6 +4,8 @@
 #include <QColorDialog>
 #include "RenderDataWidget.h"
 #include "renderers/OpenGlRenderer.h"
+#include "scene/resources/geometries/Box.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
@@ -13,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
    ui->stackedWidget->setCurrentWidget(ui->opengl);
 
    InitializeRendering();
-   ui->openGLWidget->SetRenderer(renderer);
+   ui->openGLWidget->SetRenderingData(currentScene, renderer);
 
    connect(ui->actionOpenRenderData, &QAction::triggered, this, &MainWindow::OnActionOpenRenderData);
 
@@ -66,7 +68,7 @@ void MainWindow::OnActionOpenRenderData()
     if (!renderDataWidget)
     {
         auto contentWidget = new RenderDataWidget();
-        contentWidget->SetScene(scene.get());
+        contentWidget->SetScene(currentScene.get());
         renderDataWidget = new GenericDialog(contentWidget, false, this);
         renderDataWidget->setMinimumSize(contentWidget->size());
     }
@@ -81,8 +83,40 @@ void MainWindow::InitializeRendering()
    camera->CloseOut(4.0f);
    camera->RotateInX(20.f);
 
-   scene = std::make_shared<Scene>();
+   CreateDefaultScenes();
    renderer = std::make_shared<OpenGlRenderer>();
+}
+
+void MainWindow::CreateDefaultScenes()
+{
+   auto cubeScene = std::make_shared<Scene>();
+   const unsigned int whiteTextureId = cubeScene->AddTexture(Vector3(1,1,1), "Plain White");
+   const unsigned int eyeTextureId = cubeScene->AddTexture("data/eye-blue.jpg", "Eye Texture");
+
+   Material eyeMaterial("Eye Material");
+   eyeMaterial.diffuseTextureId = eyeTextureId;
+   eyeMaterial.specularTextureId = whiteTextureId;
+   eyeMaterial.shininess = 20.f;
+   const unsigned int eyeMaterialId = cubeScene->AddMaterial(eyeMaterial);
+
+   auto eyeCube = new Box();
+   eyeCube->SetCenter(Vector3(0, 0, 0));
+   eyeCube->SetSizes(Vector3(1, 1, 1));
+   const unsigned int eyeCubeId = cubeScene->AddGeometry(eyeCube);
+
+   const unsigned int eyeModelId = cubeScene->AddSinglePartModel(eyeCubeId, eyeMaterialId, "Eye Model");
+
+   auto eyeInstance = new ModelInstance("Eye Instance 0");
+   eyeInstance->SetModelId(eyeModelId);
+   eyeInstance->SetTransform(Matrix4x4::Identity());
+   eyeInstance->SetColor(Vector3(1, 0, 0));
+   cubeScene->AddInstance(eyeInstance);
+
+   auto defaultCamera = new Camera("Default Camera");
+   cubeScene->AddCamera(defaultCamera);
+
+   defaultScenes.push_back(cubeScene);
+   currentScene = cubeScene;
 }
 
 void MainWindow::UpdateClearColor(const QColor color)

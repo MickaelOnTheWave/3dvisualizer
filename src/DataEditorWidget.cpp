@@ -45,7 +45,7 @@ void DataEditorWidget::OnAddResource()
 
 void DataEditorWidget::OnNewResourceConfirmed()
 {
-   resourceWidget->AddDataToRenderer(renderer);
+   resourceWidget->AddDataToScene(scene);
    emit RequestDataRefresh();
 }
 

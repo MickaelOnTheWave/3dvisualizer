@@ -1,22 +1,23 @@
 #include "MaterialModel.h"
 
 MaterialModel::MaterialModel(QObject *parent)
-   : AbstractDataModel{parent}
-{}
+   : AbstractValueModel(parent)
+{
+}
 
 int MaterialModel::columnCount(const QModelIndex& parent) const
 {
    return 4;
 }
 
-QVariant MaterialModel::GetDataAtColumn(Material* const& data, const int column) const
+QVariant MaterialModel::GetDataAtColumn(const Material& data, const int column) const
 {
    switch (column)
    {
-      case 0: return QString::fromUtf8(data->GetName());
-      case 1: return QString::number(data->diffuseTextureId);
-      case 2: return QString::number(data->specularTextureId);
-      case 3: return QString::number(data->shininess);
+      case 0: return QString::fromUtf8(data.GetName());
+      case 1: return QString::number(data.diffuseTextureId);
+      case 2: return QString::number(data.specularTextureId);
+      case 3: return QString::number(data.shininess);
       default: return QVariant();
    }
 }

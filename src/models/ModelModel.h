@@ -1,24 +1,24 @@
-#ifndef TEXTUREMODEL_H
-#define TEXTUREMODEL_H
+#ifndef MODELMODEL_H
+#define MODELMODEL_H
 
 #include <QObject>
 
 #include "AbstractReferenceModel.h"
-#include "scene/resources/Texture.h"
+#include "scene/resources/Model.h"
 
-class TextureModel : public AbstractReferenceModel<Texture>
+class ModelModel : public AbstractReferenceModel<Model>
 {
    Q_OBJECT
 
 public:
-   explicit TextureModel(QObject *parent = nullptr);
+   explicit ModelModel(QObject *parent = nullptr);
 
    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
-   QVariant GetDataAtColumn(Texture* data, const int column) const override;
+   QVariant GetDataAtColumn(Model* data, const int column) const override;
    QString GetHeaderAtColumn(const int column) const override;
    QHeaderView::ResizeMode GetSizingAtColumn(const int column) const override;
 };
 
-#endif // TEXTUREMODEL_H
+#endif // MODELMODEL_H

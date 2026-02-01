@@ -7,11 +7,12 @@
 #include <QTableWidget>
 
 #include "DataEditorWidget.h"
+#include "models/GeometryModel.h"
 #include "models/InstanceModel.h"
 #include "models/MaterialModel.h"
+#include "models/ModelModel.h"
 #include "models/ObjectModel.h"
 #include "models/TextureModel.h"
-#include "renderers/AbstractRenderer.h"
 
 namespace Ui {
 class RenderDataWidget;
@@ -38,9 +39,11 @@ private:
     Ui::RenderDataWidget *ui;
 
     Scene* scene;
-    TextureModel textureModel;
+    TextureModel  textureModel;
     MaterialModel materialModel;
-    ObjectModel objectModel;
+    GeometryModel geometryModel;
+    ModelModel    modelModel;
+    ObjectModel   objectModel;
     InstanceModel instanceModel;
 
     std::vector<DataEditorWidget*> editorWidgets;

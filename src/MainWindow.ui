@@ -379,7 +379,7 @@
   </action>
   <action name="actionOpenRenderData">
    <property name="text">
-    <string>Render Data</string>
+    <string>Scene Data</string>
    </property>
   </action>
   <action name="actionOpenAbout">
