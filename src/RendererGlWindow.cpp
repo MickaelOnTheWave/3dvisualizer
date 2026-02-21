@@ -24,11 +24,11 @@ void RendererGlWindow::SetAnimation(const bool enabled)
 
 void RendererGlWindow::initializeGL()
 {
-    if (!gladLoadGL())
-    {
-        emit RendererError(QString::fromUtf8("Failed to initialize Glad"));
-        return;
-    }
+   if (!gladLoadGL())
+   {
+      emit RendererError({QString::fromUtf8("Failed to initialize Glad")});
+      return;
+   }
 
    //renderer->Initialize({new ShaderProgram("data/basic.vert", "data/singleTexture.frag", "Simple Texturing")});
    renderer->Initialize();
@@ -37,7 +37,7 @@ void RendererGlWindow::initializeGL()
 
    //renderer->PrepareRendering();
    if (renderer->HasError())
-       emit RendererError(QString::fromUtf8(renderer->GetError()));
+      emit RendererError(ToList(renderer->GetErrors()));
 }
 
 void RendererGlWindow::resizeGL(int w, int h)
@@ -51,5 +51,13 @@ void RendererGlWindow::paintGL()
 
     renderer->Render(*scene.get());
     if (renderer->HasError())
-        emit RendererError(QString::fromUtf8(renderer->GetError()));
+        emit RendererError(ToList(renderer->GetErrors()));
+}
+
+QStringList RendererGlWindow::ToList(const std::vector<std::string>& input)
+{
+   QStringList output;
+   for (const auto& str : input)
+      output.append(QString::fromUtf8(str));
+   return output;
 }

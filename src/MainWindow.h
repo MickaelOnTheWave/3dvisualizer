@@ -23,7 +23,7 @@ public:
 
 private slots:
    void OnEnableWireframe(const bool enabled);
-   void OnRendererError(const QString& message);
+   void OnRendererErrors(const QStringList& message);
    void OnCameraDistanceChange(const int distance);
    void OnColorChoose();
 
@@ -31,9 +31,12 @@ private slots:
 
 private:
    void InitializeRendering();
-   void CreateDefaultScenes();
    void UpdateClearColor(const QColor color);
    void SetColorButtonIcon(const QColor color);
+
+   void CreateDefaultScenes();
+   std::shared_ptr<Scene> CreateCubeScene();
+   std::shared_ptr<Scene> CreateTriangleScene();
 
    Ui::MainWindow *ui;
 

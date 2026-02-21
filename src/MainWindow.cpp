@@ -5,6 +5,7 @@
 #include "RenderDataWidget.h"
 #include "renderers/OpenGlRenderer.h"
 #include "scene/resources/geometries/Box.h"
+#include "scene/resources/geometries/Triangle.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -20,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
    connect(ui->actionOpenRenderData, &QAction::triggered, this, &MainWindow::OnActionOpenRenderData);
 
    connect(ui->wireframeBox, &QCheckBox::toggled, this, &MainWindow::OnEnableWireframe);
-   connect(ui->openGLWidget, &RendererGlWindow::RendererError, this, &MainWindow::OnRendererError);
+   connect(ui->openGLWidget, &RendererGlWindow::RendererError, this, &MainWindow::OnRendererErrors);
    connect(ui->animateBox, &QCheckBox::stateChanged, ui->openGLWidget, &RendererGlWindow::SetAnimation);
    connect(ui->distanceSlider, &QSlider::sliderMoved, this, &MainWindow::OnCameraDistanceChange);
    connect(ui->colorButton, &QAbstractButton::pressed, this, &MainWindow::OnColorChoose);
@@ -41,10 +42,14 @@ void MainWindow::OnEnableWireframe(const bool enabled)
    glRenderer->EnableWireframeMode(enabled);
 }
 
-void MainWindow::OnRendererError(const QString& message)
+void MainWindow::OnRendererErrors(const QStringList& message)
 {
-    ui->errorMessage->setText(message);
-    ui->stackedWidget->setCurrentWidget(ui->errors);
+   QString serializedMessage;
+   for (const auto& m : message)
+      serializedMessage += m + "\n";
+
+   ui->errorMessage->setText(serializedMessage);
+   ui->stackedWidget->setCurrentWidget(ui->errors);
 }
 
 void MainWindow::OnCameraDistanceChange(const int distance)
@@ -89,6 +94,13 @@ void MainWindow::InitializeRendering()
 
 void MainWindow::CreateDefaultScenes()
 {
+   defaultScenes.push_back(CreateCubeScene());
+   defaultScenes.push_back(CreateTriangleScene());
+   currentScene = defaultScenes.back();
+}
+
+std::shared_ptr<Scene> MainWindow::CreateCubeScene()
+{
    auto cubeScene = std::make_shared<Scene>();
    const unsigned int whiteTextureId = cubeScene->AddTexture(Vector3(1,1,1), "Plain White");
    const unsigned int eyeTextureId = cubeScene->AddTexture("data/eye-blue.jpg", "Eye Texture");
@@ -113,10 +125,46 @@ void MainWindow::CreateDefaultScenes()
    cubeScene->AddInstance(eyeInstance);
 
    auto defaultCamera = new Camera("Default Camera");
+   const float aspectRatio = ui->openGLWidget->width() / static_cast<float>(ui->openGLWidget->height());
+   defaultCamera->SetPerspectiveProjection(60_deg, aspectRatio);
+   //defaultCamera->LookAt(Vector3(0, 0, 1), Vector3(0,0,0));
    cubeScene->AddCamera(defaultCamera);
+   return cubeScene;
+}
 
-   defaultScenes.push_back(cubeScene);
-   currentScene = cubeScene;
+std::shared_ptr<Scene> MainWindow::CreateTriangleScene()
+{
+   auto scene = std::make_shared<Scene>();
+   const unsigned int simpleTextureId = scene->AddTexture(Vector3(1,0,0), "Plain Red");
+   const unsigned int whiteTextureId = scene->AddTexture(Vector3(1,1,1), "Plain White");
+
+   Material material("Material");
+   material.diffuseTextureId = simpleTextureId;
+   material.specularTextureId = whiteTextureId;
+   material.shininess = 20.f;
+   const unsigned int materialId = scene->AddMaterial(material);
+
+   auto geometry = new Triangle();
+   geometry->point1 = Vector3(0, 0, -5);
+   geometry->point2 = Vector3(1, 0, -5);
+   geometry->point3 = Vector3(0, 1, -5);
+   const unsigned int geometryId = scene->AddGeometry(geometry);
+
+   const unsigned int modelId = scene->AddSinglePartModel(geometryId, materialId, "Triangle Model");
+
+   auto instance = new ModelInstance("Instance 0");
+   instance->SetModelId(modelId);
+   instance->SetTransform(Matrix4x4::Identity());
+   instance->SetColor(Vector3(0, 1, 0));
+   scene->AddInstance(instance);
+
+   auto defaultCamera = new Camera("Default Camera");
+   const float aspectRatio = ui->openGLWidget->width() / static_cast<float>(ui->openGLWidget->height());
+   defaultCamera->SetPerspectiveProjection(60_deg, aspectRatio);
+   //defaultCamera->LookAt(Vector3(-2, 2, 2), Vector3(0,0,0));
+   defaultCamera->LookAt(Vector3(0, 0, 1), Vector3(0,0,0));
+   scene->AddCamera(defaultCamera);
+   return scene;
 }
 
 void MainWindow::UpdateClearColor(const QColor color)

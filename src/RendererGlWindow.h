@@ -22,7 +22,7 @@ public:
    void SetAnimation(const bool enabled);
 
 signals:
-   void RendererError(const QString& message);
+   void RendererError(const QStringList messages);
 
 protected:
    void initializeGL() override;
@@ -30,6 +30,8 @@ protected:
    void paintGL() override;
 
 private:
+   QStringList ToList(const std::vector<std::string>& input);
+
    std::shared_ptr<Scene> scene;
    std::shared_ptr<AbstractRenderer> renderer;
 
