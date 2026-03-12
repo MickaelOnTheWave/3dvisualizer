@@ -85,8 +85,8 @@ void MainWindow::OnActionOpenRenderData()
 void MainWindow::InitializeRendering()
 {
    camera = std::make_shared<OrbitCamera>(Vector3(0.f, 0.f, 0.f));
-   camera->CloseOut(4.0f);
-   camera->RotateInX(20.f);
+   //camera->CloseOut(4.0f);
+   //camera->RotateInX(20.f);
 
    CreateDefaultScenes();
    renderer = std::make_shared<OpenGlRenderer>();
@@ -96,7 +96,8 @@ void MainWindow::CreateDefaultScenes()
 {
    defaultScenes.push_back(CreateCubeScene());
    defaultScenes.push_back(CreateTriangleScene());
-   currentScene = defaultScenes.back();
+   defaultScenes.push_back(CreateTriangleSeaScene());
+   currentScene = defaultScenes[1];
 }
 
 std::shared_ptr<Scene> MainWindow::CreateCubeScene()
@@ -127,7 +128,7 @@ std::shared_ptr<Scene> MainWindow::CreateCubeScene()
    auto defaultCamera = new Camera("Default Camera");
    const float aspectRatio = ui->openGLWidget->width() / static_cast<float>(ui->openGLWidget->height());
    defaultCamera->SetPerspectiveProjection(60_deg, aspectRatio);
-   //defaultCamera->LookAt(Vector3(0, 0, 1), Vector3(0,0,0));
+   defaultCamera->LookAt(Vector3(0, 0, 3), Vector3(0,0,0));
    cubeScene->AddCamera(defaultCamera);
    return cubeScene;
 }
@@ -135,6 +136,50 @@ std::shared_ptr<Scene> MainWindow::CreateCubeScene()
 std::shared_ptr<Scene> MainWindow::CreateTriangleScene()
 {
    auto scene = std::make_shared<Scene>();
+   const unsigned int modelId = CreateTriangleModel(scene);
+
+   auto instance = new ModelInstance("Instance 0");
+   instance->SetModelId(modelId);
+   auto debugging = Matrix4x4::Translation(0, 0, -3);
+   debugging.Transpose();
+   instance->SetTransform(debugging);
+   instance->SetColor(Vector3(0, 1, 0));
+   scene->AddInstance(instance);
+
+   auto defaultCamera = new Camera("Default Camera");
+   const float aspectRatio = ui->openGLWidget->width() / static_cast<float>(ui->openGLWidget->height());
+   defaultCamera->SetPerspectiveProjection(60_deg, aspectRatio);
+   defaultCamera->LookAt(Vector3(-2, 2, 5), Vector3(0,0,0));
+   scene->AddCamera(defaultCamera);
+   return scene;
+}
+
+std::shared_ptr<Scene> MainWindow::CreateTriangleSeaScene()
+{
+   auto scene = std::make_shared<Scene>();
+   CreateTriangleModel(scene);
+
+   Vector3 startingPos(-10, -5, -10);
+   const Vector3 instanceCount(10, 3, 8);
+   const Vector3 intervals(2, 5, 2);
+   Vector3 color(1, 0, 0);
+   AddInstances(scene, startingPos, instanceCount, intervals, color, "Red");
+
+   startingPos.SetZ(2);
+   color = Vector3(0, 1, 0);
+   AddInstances(scene, startingPos, instanceCount, intervals, color, "Green");
+
+   auto defaultCamera = new Camera("Default Camera");
+   const float aspectRatio = ui->openGLWidget->width() / static_cast<float>(ui->openGLWidget->height());
+   defaultCamera->SetPerspectiveProjection(60_deg, aspectRatio);
+   //defaultCamera->LookAt(Vector3(-2, 2, 2), Vector3(0,0,0));
+   defaultCamera->LookAt(Vector3(0, 0, 1), Vector3(0,0,0));
+   scene->AddCamera(defaultCamera);
+   return scene;
+}
+
+unsigned int MainWindow::CreateTriangleModel(std::shared_ptr<Scene> scene)
+{
    const unsigned int simpleTextureId = scene->AddTexture(Vector3(1,0,0), "Plain Red");
    const unsigned int whiteTextureId = scene->AddTexture(Vector3(1,1,1), "Plain White");
 
@@ -145,26 +190,39 @@ std::shared_ptr<Scene> MainWindow::CreateTriangleScene()
    const unsigned int materialId = scene->AddMaterial(material);
 
    auto geometry = new Triangle();
-   geometry->point1 = Vector3(0, 0, -5);
-   geometry->point2 = Vector3(1, 0, -5);
-   geometry->point3 = Vector3(0, 1, -5);
+   geometry->point1 = Vector3(0, 0, 0);
+   geometry->point2 = Vector3(1, 0, 0);
+   geometry->point3 = Vector3(0, 1, 0);
    const unsigned int geometryId = scene->AddGeometry(geometry);
 
-   const unsigned int modelId = scene->AddSinglePartModel(geometryId, materialId, "Triangle Model");
+   return scene->AddSinglePartModel(geometryId, materialId, "Triangle Model");
+}
 
-   auto instance = new ModelInstance("Instance 0");
-   instance->SetModelId(modelId);
-   instance->SetTransform(Matrix4x4::Identity());
-   instance->SetColor(Vector3(0, 1, 0));
-   scene->AddInstance(instance);
+void MainWindow::AddInstances(std::shared_ptr<Scene> scene, const Vector3 startingPosition, const Vector3 instanceCount,
+                              const Vector3 intervals, const Vector3 color, const std::string& labelBase)
+{
+   Model* model = scene->FindModelByName("Triangle Model");
+   if (!model)
+      return;
+   for (int instX = 0; instX < instanceCount.X(); ++instX)
+   {
+      for (int instY = 0; instY < instanceCount.Y(); ++instY)
+      {
+         for (int instZ = 0; instZ < instanceCount.Z(); ++instZ)
+         {
+            const Vector3 diffPos(instX * intervals.X(), instY * intervals.Y(), instY * intervals.Z());
+            const Vector3 position = startingPosition + diffPos;
+            const auto transform = Matrix4x4::Translation(position);
+            const std::string name = labelBase + " " + std::to_string(instZ);
 
-   auto defaultCamera = new Camera("Default Camera");
-   const float aspectRatio = ui->openGLWidget->width() / static_cast<float>(ui->openGLWidget->height());
-   defaultCamera->SetPerspectiveProjection(60_deg, aspectRatio);
-   //defaultCamera->LookAt(Vector3(-2, 2, 2), Vector3(0,0,0));
-   defaultCamera->LookAt(Vector3(0, 0, 1), Vector3(0,0,0));
-   scene->AddCamera(defaultCamera);
-   return scene;
+            auto instance = new ModelInstance(name);
+            instance->SetModelId(model->GetId());
+            instance->SetTransform(transform);
+            instance->SetColor(color);
+            scene->AddInstance(instance);
+         }
+      }
+   }
 }
 
 void MainWindow::UpdateClearColor(const QColor color)

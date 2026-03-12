@@ -37,6 +37,12 @@ private:
    void CreateDefaultScenes();
    std::shared_ptr<Scene> CreateCubeScene();
    std::shared_ptr<Scene> CreateTriangleScene();
+   std::shared_ptr<Scene> CreateTriangleSeaScene();
+
+   unsigned int CreateTriangleModel(std::shared_ptr<Scene> scene);
+   void AddInstances(std::shared_ptr<Scene> scene, const Vector3 startingPosition,
+                     const Vector3 instanceCount, const Vector3 intervals,
+                     const Vector3 color, const std::string& labelBase);
 
    Ui::MainWindow *ui;
 
