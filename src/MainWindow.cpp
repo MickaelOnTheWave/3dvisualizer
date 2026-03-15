@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 
    connect(ui->wireframeBox, &QCheckBox::toggled, this, &MainWindow::OnEnableWireframe);
    connect(ui->openGLWidget, &RendererGlWindow::RendererError, this, &MainWindow::OnRendererErrors);
+   connect(ui->camControllerBox, &QComboBox::currentIndexChanged, this, &MainWindow::OnCameraControllerChange);
    connect(ui->animateBox, &QCheckBox::stateChanged, ui->openGLWidget, &RendererGlWindow::SetAnimation);
    connect(ui->distanceSlider, &QSlider::sliderMoved, this, &MainWindow::OnCameraDistanceChange);
    connect(ui->colorButton, &QAbstractButton::pressed, this, &MainWindow::OnColorChoose);
@@ -50,6 +51,11 @@ void MainWindow::OnRendererErrors(const QStringList& message)
 
    ui->errorMessage->setText(serializedMessage);
    ui->stackedWidget->setCurrentWidget(ui->errors);
+}
+
+void MainWindow::OnCameraControllerChange(const int index)
+{
+   ui->cameraContainer->setCurrentIndex(index);
 }
 
 void MainWindow::OnCameraDistanceChange(const int distance)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>950</width>
-    <height>617</height>
+    <width>1078</width>
+    <height>622</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -127,7 +127,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>950</width>
+     <width>1078</width>
      <height>22</height>
     </rect>
    </property>
@@ -173,15 +173,15 @@
      <item>
       <widget class="QToolBox" name="toolBox">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="renderPage">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>112</width>
-          <height>443</height>
+          <width>191</width>
+          <height>448</height>
          </rect>
         </property>
         <attribute name="label">
@@ -261,46 +261,133 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>112</width>
-          <height>443</height>
+          <width>191</width>
+          <height>448</height>
          </rect>
         </property>
         <attribute name="label">
-         <string>Navigation</string>
+         <string>Camera</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
-          <widget class="QCheckBox" name="animateBox">
-           <property name="text">
-            <string>Animate</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
+          <widget class="QComboBox" name="camControllerBox">
+           <item>
+            <property name="text">
+             <string>Orbit Camera</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Fps Camera</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>
-          <widget class="QSlider" name="distanceSlider">
-           <property name="value">
-            <number>50</number>
+          <widget class="QStackedWidget" name="cameraContainer">
+           <property name="currentIndex">
+            <number>0</number>
            </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
+           <widget class="QWidget" name="orbitPage">
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <item>
+              <widget class="QCheckBox" name="animateBox">
+               <property name="text">
+                <string>Animate</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QSlider" name="distanceSlider">
+                 <property name="value">
+                  <number>50</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Distance</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Target</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <item>
+                <widget class="QSpinBox" name="xSpin"/>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="ySpin"/>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="zSpin"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="fpsPage">
+            <widget class="QWidget" name="">
+             <property name="geometry">
+              <rect>
+               <x>40</x>
+               <y>60</y>
+               <width>82</width>
+               <height>58</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <item>
+               <widget class="QPushButton" name="camForwardButton">
+                <property name="text">
+                 <string>Forward</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="camBackButton">
+                <property name="text">
+                 <string>Back</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
           </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_8">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>164</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </widget>
@@ -309,8 +396,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>112</width>
-          <height>443</height>
+          <width>191</width>
+          <height>448</height>
          </rect>
         </property>
         <attribute name="label">

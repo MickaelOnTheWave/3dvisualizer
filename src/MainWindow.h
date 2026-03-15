@@ -24,6 +24,7 @@ public:
 private slots:
    void OnEnableWireframe(const bool enabled);
    void OnRendererErrors(const QStringList& message);
+   void OnCameraControllerChange(const int index);
    void OnCameraDistanceChange(const int distance);
    void OnColorChoose();
 
