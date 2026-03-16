@@ -3,6 +3,7 @@
 
 #include <QColorDialog>
 #include "RenderDataWidget.h"
+#include "cameracontrollers/OrbitCameraController.h"
 #include "renderers/OpenGlRenderer.h"
 #include "scene/resources/geometries/Box.h"
 #include "scene/resources/geometries/Triangle.h"
@@ -55,7 +56,10 @@ void MainWindow::OnRendererErrors(const QStringList& message)
 
 void MainWindow::OnCameraControllerChange(const int index)
 {
-   ui->cameraContainer->setCurrentIndex(index);
+   if (index >= 0 && index < static_cast<int>(cameraControllers.size())) {
+      currentCameraController = cameraControllers[index];
+      ui->cameraContainer->setCurrentIndex(index);
+   }   
 }
 
 void MainWindow::OnCameraDistanceChange(const int distance)
@@ -65,7 +69,7 @@ void MainWindow::OnCameraDistanceChange(const int distance)
     const float destinationRange = 0.01f;
     const float destinationMiddle = 4.0f;
     const float destinationDistance = ((distance - ui->distanceSlider->minimum()) / sourceRange) * destinationRange + (destinationMiddle - destinationRange);
-    camera->CloseOut(0.1f);
+    //camera->CloseOut(0.1f);
 }
 
 void MainWindow::OnColorChoose()
@@ -90,12 +94,23 @@ void MainWindow::OnActionOpenRenderData()
 
 void MainWindow::InitializeRendering()
 {
-   camera = std::make_shared<OrbitCamera>(Vector3(0.f, 0.f, 0.f));
+   //camera = std::make_shared<OrbitCamera>(Vector3(0.f, 0.f, 0.f));
    //camera->CloseOut(4.0f);
    //camera->RotateInX(20.f);
-
    CreateDefaultScenes();
+   SetupCameraControllers();
    renderer = std::make_shared<OpenGlRenderer>();
+}
+
+void MainWindow::SetupCameraControllers()
+{
+   const Vector3 origin(0, 0, 0);
+   auto orbitController = std::make_shared<OrbitCameraController>();
+   orbitController->SetTarget(origin);
+   cameraControllers.push_back(orbitController);
+   
+   currentCameraController = cameraControllers.front();
+   currentCameraController->Initialize(currentScene->GetCurrentCamera());
 }
 
 void MainWindow::CreateDefaultScenes()

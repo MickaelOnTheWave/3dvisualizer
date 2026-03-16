@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "cameras/OrbitCamera.h"
+#include "cameracontrollers/AbstractCameraController.h"
 #include "renderers/AbstractRenderer.h"
 #include "GenericDialog.h"
 
@@ -32,6 +33,7 @@ private slots:
 
 private:
    void InitializeRendering();
+   void SetupCameraControllers();
    void UpdateClearColor(const QColor color);
    void SetColorButtonIcon(const QColor color);
 
@@ -52,6 +54,8 @@ private:
    std::vector<std::shared_ptr<Scene>> defaultScenes;
    std::shared_ptr<Scene> currentScene = nullptr;
    std::shared_ptr<AbstractRenderer> renderer = nullptr;
-   std::shared_ptr<OrbitCamera> camera = nullptr;
+   
+   std::vector<std::shared_ptr<AbstractCameraController>> cameraControllers;
+   std::shared_ptr<AbstractCameraController> currentCameraController = nullptr;
 };
 #endif // MAINWINDOW_H

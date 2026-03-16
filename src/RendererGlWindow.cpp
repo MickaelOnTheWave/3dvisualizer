@@ -46,12 +46,9 @@ void RendererGlWindow::resizeGL(int w, int h)
 
 void RendererGlWindow::paintGL()
 {
-    //if (animate)
-    //  currentCamera->RotateInY(2.0f);
-
-    renderer->Render(*scene.get());
-    if (renderer->HasError())
-        emit RendererError(ToList(renderer->GetErrors()));
+   renderer->Render(*scene.get());
+   if (renderer->HasError())
+      emit RendererError(ToList(renderer->GetErrors()));
 }
 
 QStringList RendererGlWindow::ToList(const std::vector<std::string>& input)
